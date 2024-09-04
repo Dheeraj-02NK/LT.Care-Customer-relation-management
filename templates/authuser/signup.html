@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>LT.Care | Login</title>
+</head>
+
+<body>
+    <div class="div-box">
+        <div class="heading">
+            <h1>Sign Up</h1>
+        </div>
+        <div class="form-div">
+            <div class="input-forms">
+                <div class="forms">
+                    <label>
+                        <input type="text" placeholder="Full Name" id="fullname" name="fullname">
+                    </label>
+                </div>
+                <div class="forms">
+                    <lable>
+                        <input id="phone" type="text" placeholder="Phone number" name="phone">
+                    </lable>
+                </div>
+                <div class="forms">
+                    <label>
+                        <input type="email" placeholder="Email" id="email" name="email">
+                    </label>
+                </div>
+                <div class="forms">
+                    <label>
+                    <input type="password" placeholder="Enter Password" id="password" name="password"></label>
+                </div>
+                <div class="forms">
+                    <button onclick="signup()" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+
+    <script src="{% static 'js/signup.js' %}"></script>
+</body>
+</html>

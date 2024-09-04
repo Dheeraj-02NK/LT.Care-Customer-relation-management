@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>User Data Table</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, table {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Set the font and background for the entire page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        /* Center the table on the page and set a maximum width */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Style the table */
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style the table header */
+        .user-table thead {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .user-table th {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        /* Style table rows and cells */
+        .user-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .user-table tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        .user-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Style the delete button */
+        .user-table .delete-btn {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .user-table .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Add responsive design */
+        @media (max-width: 768px) {
+            .user-table thead {
+                display: none;
+            }
+            
+            .user-table, .user-table tbody, .user-table tr, .user-table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .user-table tr {
+                margin-bottom: 15px;
+            }
+            
+            .user-table td {
+                text-align: right;
+                position: relative;
+                padding-left: 50%;
+                box-sizing: border-box;
+            }
+            
+            .user-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 45%;
+                padding-left: 15px;
+                font-weight: bold;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Phone</th>
+                    <th>Actions</th> <!-- New header for actions -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in userdata %}
+                <tr>
+                    <td>{{ user.fullname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.password }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td><button class="delete-btn" onclick="deleteUser('{{ user.id }}')">Delete</button></td> <!-- Delete button -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        function deleteUser(id) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                // Implement your delete logic here, e.g., send a request to the server
+                console.log('User with ID ' + id + ' deleted.');
+            }
+            $.ajax({
+                type:'POST',
+                url:'/delete_user/',
+                data:{"id": id},
+                success: function(data){
+                    if (data){
+                        window.location.replace('/view_user')
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>
