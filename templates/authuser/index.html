@@ -32,7 +32,7 @@
     <section>
         <div class="hero-section">
             <div class="hero-left">
-                <img src="banner-img2.png" alt="banner-img">
+                <img src="{% static '/images/banner-img2.png'%}" alt="banner-img">
             </div>
             <div class="hero-right">
                 <h1>LT<span>.</span>Care</h1>
@@ -110,15 +110,15 @@
                 <h1>Our <span>Expertise</span></h1>
             </div>
             <div class="work-comp">
-                <img src="images/Laptop-logos.jpg" alt="">
-                <img src="images/Laptop-logos - Copy.jpg" alt="">
+                <img src="{% static 'images/Laptop-logos.jpg' %}" alt="">
+                <img src="{% static 'images/Laptop-logos - Copy.jpg' %}" alt="">
             </div>
         </div>
     </section>
 </body>
 <script>
     function submit() {
-        window.location.href = 'Login.html'
+        window.location.href = '/signup'
     }
 </script>
 
