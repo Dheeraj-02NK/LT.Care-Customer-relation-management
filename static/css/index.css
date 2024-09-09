@@ -18,25 +18,25 @@
 
 .navLogo h1 {
     color: rgb(255, 255, 255);
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 600;
 }
 
 .navLogo h1 span {
     color: rgb(50, 255, 0);
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .nav-link li a {
     text-decoration: none;
     color: white;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 600;
 }
 
 .nav-link button {
     padding: 5px 10px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 600;
     font-size: 16px;
     background-color: #000;
@@ -68,7 +68,7 @@
 
 .hero-right h1 {
     font-size: 5rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 600;
     margin: 0;
     padding: 0;
@@ -76,7 +76,7 @@
 
 .hero-right p {
     font-size: 25px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     letter-spacing: 2px;
     margin: 0;
     text-align: justify;
@@ -93,7 +93,7 @@
 }
 
 .section1 h1 {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 40px;
     margin-top: 60px;
 }
@@ -126,13 +126,13 @@
 
 .issue h1 {
     font-size: 25px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
 }
 
 .issue h4 {
     font-size: 15px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: justify;
     margin: 40px;
 }
@@ -140,7 +140,7 @@
 .issue button {
     background-color: #000;
     color: #fff;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 600;
     height: 40px;
     border: none;
@@ -158,7 +158,7 @@
 
 .work h1 {
     text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 40px;
     margin-top: 60px;
 }
@@ -198,21 +198,21 @@
 
 .issu h1 {
     text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 40px;
     margin: 0px;
 }
 
 .issu h4 {
     text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 20px;
 }
 
 .issu button {
     background-color: #000;
     color: #fff;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 500;
     height: 35px;
     border: none;

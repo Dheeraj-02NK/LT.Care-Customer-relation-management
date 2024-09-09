@@ -32,6 +32,18 @@ class delete_user(APIView):
         id = request.POST["id"]
         AuthUser.objects.filter(id=id).delete()
         return JsonResponse({"status":"pass"})
+    
+class edit_user(APIView):
+    def post(self, request):
+        uid = request.POST['id']
+        fullname1 = request.POST['fullname']
+        email1 = request.POST['email']
+        phone1 = request.POST['phone']
+        password1 = request.POST['password']
+        print(password1)
+        userdata = AuthUser.objects.filter(id=uid).update(fullname=fullname1,email=email1,phone=phone1, password=password1)
+        print("********: ", userdata)
+        return JsonResponse({"status":"pass"})
 
 class ViewStaff(TemplateView):
     template_name = 'view_user.html'
