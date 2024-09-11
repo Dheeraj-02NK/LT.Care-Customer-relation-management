@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>LT.Care | Login</title>
+</head>
+
+<body>
+    <div class="div-box">
+        <div class="heading">
+            <h1>Login</h1>
+        </div>
+        <div class="form-div">
+            <div class="input-forms">
+                <div class="forms">
+                    <label></label>
+                    <input id="input" type="text" placeholder="Enter your number">
+                    <p id="message"></p>
+                </div>
+                <div class="forms">
+                    <label></label>
+                    <input type="password" placeholder="Enter Password" id="password">
+                </div>
+                <div class="forms form-button">
+                    <button onclick="checkAuth()" type="submit">Submit</button>
+                    <button onclick="signup()" type="Sign">Signup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/login.js' %}"></script>
+</body>
+
+</html>
