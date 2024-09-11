@@ -42,7 +42,7 @@ class edit_user(APIView):
         password1 = request.POST['password']
         print(password1)
         userdata = AuthUser.objects.filter(id=uid).update(fullname=fullname1,email=email1,phone=phone1, password=password1)
-        print("********: ", userdata)
+        # print("********: ", userdata)
         return JsonResponse({"status":"pass"})
 
 class ViewStaff(TemplateView):
