@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Management System</title>
+    <link rel="stylesheet" href="{% static 'css/lead.css' %}"> <!-- Updated CSS file name -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">LT.Care</div>
+        <div class="nav-buttons">
+            <button class="btn"><i class="fas fa-bell"></i></button>
+            <button class="btn"><i class="fas fa-cog"></i></button>
+            <button class="btn">Logout</button>
+        </div>
+    </header>
+    
+    <main class="container">
+        <!-- Technician Section -->
+        <section class="technicians">
+            <h2>Technician Information</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example rows for demonstration -->
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>Electrical</td>
+                        <td>Available</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jane Smith</td>
+                        <td>Plumbing</td>
+                        <td>Available</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Ticket Section -->
+        <section class="tickets">
+            <h2>Tickets</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>101</td>
+                        <td>Fix kitchen sink</td>
+                        <td>Open</td>
+                    </tr>
+                    <tr>
+                        <td>102</td>
+                        <td>Repair electrical wiring</td>
+                        <td>In Progress</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Ticket Assignment Section -->
+        <section class="assignment">
+            <h2>Assign Ticket</h2>
+            <div id="assignment-form">
+                <div class="form-group">
+                    <label for="technician1">Select Technician:</label>
+                    <select id="technician1" name="technician1">
+                        <option value="1">John Doe</option>
+                        <option value="2">Jane Smith</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ticket1">Select Ticket:</label>
+                    <select id="ticket1" name="ticket1">
+                        <option value="101">Fix kitchen sink</option>
+                        <option value="102">Repair electrical wiring</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assignment-date">Assignment Date:</label>
+                    <input type="date" id="assignment-date" name="assignment-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="tech-lead">Tech Lead Name:</label>
+                    <input type="text" id="tech-lead" name="tech-lead" required>
+                </div>
+                <button type="button" id="assign-button" onclick="sign()">Assign</button>
+            </div>
+            <!-- <div id="assigned-tickets">
+                <h3>Assigned Tickets</h3>
+                <table id="assigned-tickets-table">
+                    <thead>
+                        <tr>
+                            <th>Technician</th>
+                            <th>Ticket</th>
+                            <th>Assignment Date</th>
+                            <th>Tech Lead</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+            </div> -->
+        </section>
+    </main>
+    <script>
+    function sign() {
+      var tec_name = $("#technician1").val();
+      var tk_name = $("#ticket1").val(); 
+      var ass_date = $("#assignment-date").val(); 
+      var ld_name = $("#tech-lead").val();
+
+    $.ajax({
+      type: "POST",
+      url: "{% url 'Createtkassign' %}",
+      data: {
+        "tec_name": tec_name,
+        "tk_name": tk_name,
+        "ass_date":ass_date,
+        "ld_name":ld_name,
+      },
+      success: function (data) {
+        alert("success");
+        window.location.replace("Viewtkassign");
+      }
+     }
+    );
+  }
+    </script>
+</body>
+</html>

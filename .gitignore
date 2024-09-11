@@ -11,6 +11,7 @@ migrations
 migrations/
 /media
 venv
+db.sqlite3
 
 
 # If your build procefss includes running collectstatic, then you probably don't need or want to include staticfiles/

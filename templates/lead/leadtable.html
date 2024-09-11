@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Management System</title>
+    <link rel="stylesheet" href="{% static 'css/lead.css' %}"> <!-- Updated CSS file name -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">LT.Care</div>
+        <div class="nav-buttons">
+            <button class="btn"><i class="fas fa-bell"></i></button>
+            <button class="btn"><i class="fas fa-cog"></i></button>
+            <button class="btn">Logout</button>
+        </div>
+    </header>
+    <main class="content">
+        <h1>Welcome to the Dashboard</h1>
+        <div class="table-container">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Technician Name</th>
+                        <th>Ticket</th>
+                        <th>Date</th>
+                        <th>Lead name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in userdata %}
+                    <tr id="row-{{ user.id }}">
+                        <td class="fullname">{{ user.teach_name }}</td>
+                        <td class="email">{{ user.tick_name }}</td>
+                        <td class="password">{{ user.lead_date }}</td>
+                        <td class="phone">{{ user.lead_name }}</td>
+                        <td>
+                            <button class="edit-btn" onclick="editRow('{{ user.id }}')">Edit</button>
+                            <button class="delete-btn" onclick="deleteUser('{{ user.id }}')">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script>
+        function deleteUser(id) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: "deletetkassign",
+                    data: { "id": id },
+                    success: function (data) {
+                        if (data) {
+                            window.location.replace('Viewtkassign');
+                        }
+                    }
+                });
+            }
+        }
+
+    </script>
+</body>
+</html>
