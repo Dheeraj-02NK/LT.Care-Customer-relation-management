@@ -43,5 +43,5 @@ class edit_user(APIView):
         email1 = request.POST['email']
         phone1 = request.POST['phone']
         password1 = request.POST['password']
-        userdata = Lead.objects.filter(id=uid).update(teach_name=fullname1,tick_name=email1,lead_date=phone1, lead_name=password1)
+        userdata = Lead.objects.filter(id=uid).update(teach_name=fullname1,tick_name=email1,lead_date=password1, lead_name=phone1)
         return JsonResponse({"status":"pass"})

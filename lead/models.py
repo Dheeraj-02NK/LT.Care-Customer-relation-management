@@ -4,5 +4,5 @@ from django.db import models
 class Lead(models.Model):
     teach_name= models.CharField(max_length=200)
     tick_name = models.CharField(max_length= 200)
-    lead_date = models.CharField(max_length=50)
+    lead_date = models.DateField()
     lead_name = models.CharField(max_length=50)
