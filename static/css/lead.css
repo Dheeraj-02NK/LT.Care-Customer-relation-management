@@ -44,7 +44,7 @@ main.container {
 
 /* Section Spacing */
 .card + .card {
-    margin-top: 30px; /* Adds space between cards */
+    margin-top: 100px; /* Adds space between cards */
 }
 
 /* Card Style */
@@ -52,6 +52,7 @@ main.container {
     background: #fff;
     padding: 25px;
     border-radius: 10px;
+    margin-bottom: 10%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -135,5 +136,61 @@ main.container {
 @media (max-width: 768px) {
     .card-content {
         grid-template-columns: 1fr;
+    }
+}
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: auto;
+    left: 0;
+    width: 200px;
+    height: 65%;
+    background-color: #333;
+    padding-top: 60px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2em;
+    padding: 20px 20px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #444;
+}
+
+.sidebar nav ul li a i {
+    margin-right: 15px;
+}
+
+/* Adjust main container for sidebar */
+main.container {
+    margin-left: 220px; /* Space for the sidebar */
+    padding: 40px;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    main.container {
+        margin-left: 0;
     }
 }
