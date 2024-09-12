@@ -35,3 +35,13 @@ class Viewtkassign(TemplateView):
         userdata = Lead.objects.all()
         context['userdata'] = userdata
         return context
+
+class edit_user(APIView):
+    def post(self, request):
+        uid = request.POST['id']
+        fullname1 = request.POST['fullname']
+        email1 = request.POST['email']
+        phone1 = request.POST['phone']
+        password1 = request.POST['password']
+        userdata = Lead.objects.filter(id=uid).update(teach_name=fullname1,tick_name=email1,lead_date=phone1, lead_name=password1)
+        return JsonResponse({"status":"pass"})

@@ -1,4 +1,4 @@
-/* Reset some default styles */
+/* Reset styles */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #f4f4f4;
+    background-color: #f7f7f7;
     color: #333;
 }
 
@@ -15,13 +15,13 @@ header.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #004d40;
+    background-color:  #333;
     color: #fff;
-    padding: 10px 20px;
+    padding: 15px 30px;
 }
 
 header .logo {
-    font-size: 1.5em;
+    font-size: 1.8em;
     font-weight: bold;
 }
 
@@ -31,87 +31,109 @@ header .nav-buttons .btn {
     color: #fff;
     font-size: 1.2em;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 header .nav-buttons .btn:hover {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 main.container {
-    padding: 20px;
+    padding: 40px;
 }
 
-section {
+/* Section Spacing */
+.card + .card {
+    margin-top: 30px; /* Adds space between cards */
+}
+
+/* Card Style */
+.card {
     background: #fff;
-    margin-bottom: 20px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Title */
+.card h2 {
+    color: #2c3e50;
+    margin-bottom: 50px;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+/* Grid Layout for Cards */
+.card-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust number of columns */
+    gap: 30px;
+}
+
+.card-item {
+    background-color: #ecf0f1;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease;
 }
 
-h2 {
-    color: #004d40;
-    margin-bottom: 15px;
+.card-item:hover {
+    transform: scale(1.05);
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.card-item h3 {
+    font-size: 1.2em;
+    color: #2980b9;
+    margin-bottom: 10px;
 }
 
-table th, table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
+/* Form Styles */
+.assign-card{
+    width :50%;
+    margin-left: 25%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+.assign-card .form-group {
+    margin-bottom: 25px;
 }
 
-table th {
-    background-color: #00796b;
-    color: #fff;
-}
-
-form .form-group {
-    margin-bottom: 15px;
-}
-
-form label {
+.assign-card label {
+    font-size: 1.1em;
+    color: #2c3e50;
+    font-weight: 500;
     display: block;
     margin-bottom: 5px;
 }
+.assign-card label i{
+    margin-right: 10px;
+}
 
-form select, form input {
+.assign-card .form-control {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
-form button {
-    background-color: #00796b;
+.btn-primary {
+    background-color: #2980b9;
     color: #fff;
-    border: none;
     padding: 10px 20px;
-    font-size: 1em;
-    border-radius: 4px;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 1em;
+    margin-left: 35%;
 }
 
-form button:hover {
-    background-color: #004d40;
+.btn-primary:hover {
+    background-color: #1e6a9a;
 }
 
+/* Responsiveness */
 @media (max-width: 768px) {
-    header.navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    header .nav-buttons {
-        margin-top: 10px;
-    }
-
-    table, form {
-        font-size: 0.9em;
+    .card-content {
+        grid-template-columns: 1fr;
     }
 }
