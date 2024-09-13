@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
     <header class="navbar">
@@ -19,12 +21,33 @@
             <button class="btn">Logout</button>
         </div>
     </header>
-    
+
+    <!-- Sidebar Section -->
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#technician"><i class="fas fa-users"></i> Technician Information</a></li>
+                <li><a href="#tickets"><i class="fas fa-ticket-alt"></i> Tickets</a></li>
+                <li><a href="#assign"><i class="fas fa-tasks"></i> Assign Ticket</a></li>
+            </ul>
+        </nav>
+    </aside>
+
     <main class="container">
+        <!-- Home Section -->
+        <section id="home" >
+            <section id="analysis" class="card">
+                <h2>Ticket Analysis by Location</h2>
+                <canvas id="ticketChart" width="250" height="100"></canvas>
+            </section>
+        </section> 
+
         <!-- Technician Section -->
-        <section class="card">
+        <section id="technician" class="card">
             <h2>Technician Information</h2>
             <div class="card-content">
+                <!-- Technician Cards Here -->
                 <div class="card-item">
                     <h3>Rohit Sharma</h3>
                     <p><strong>ID:</strong> 1</p>
@@ -55,13 +78,33 @@
                     <p><strong>Specialization:</strong> Electrical</p>
                     <p><strong>Status:</strong> Available</p>
                 </div>
+                <div class="card-item">
+                    <h3>Ishanth Sharma</h3>
+                    <p><strong>ID:</strong> 6</p>
+                    <p><strong>Specialization:</strong> Electrical</p>
+                    <p><strong>Status:</strong> Available</p>
+                </div>
+                <div class="card-item">
+                    <h3>Chri Gayle</h3>
+                    <p><strong>ID:</strong> 7</p>
+                    <p><strong>Specialization:</strong> Electrical</p>
+                    <p><strong>Status:</strong> Available</p>
+                </div>
+                <div class="card-item">
+                    <h3>Shreyas Iyer</h3>
+                    <p><strong>ID:</strong> 8</p>
+                    <p><strong>Specialization:</strong> Electrical</p>
+                    <p><strong>Status:</strong> Available</p>
+                </div>
             </div>
         </section>
 
         <!-- Ticket Section -->
-        <section class="card ticket-section">
+        <section id="tickets" class="card ticket-section">
             <h2>Tickets</h2>
             <div class="card-content">
+                <!-- Tickets Cards Here -->
+                 
                 <div class="card-item">
                     <p><strong>Ticket ID:</strong> 101</p>
                     <p><strong>Description:</strong> Fix kitchen sink</p>
@@ -87,12 +130,28 @@
                     <p><strong>Description:</strong> Fix kitchen sink</p>
                     <p><strong>Status:</strong> Open</p>
                 </div>
+                <div class="card-item">
+                    <p><strong>Ticket ID:</strong> 106</p>
+                    <p><strong>Description:</strong> Fix kitchen sink</p>
+                    <p><strong>Status:</strong> Open</p>
+                </div>
+                <div class="card-item">
+                    <p><strong>Ticket ID:</strong> 107</p>
+                    <p><strong>Description:</strong> Fix kitchen sink</p>
+                    <p><strong>Status:</strong> Open</p>
+                </div>
+                <div class="card-item">
+                    <p><strong>Ticket ID:</strong> 108</p>
+                    <p><strong>Description:</strong> Fix kitchen sink</p>
+                    <p><strong>Status:</strong> Open</p>
+                </div>
             </div>
         </section>
 
-        <!-- Ticket Assignment Section -->
-        <section class="card assign-card">
+        <!-- Assign Ticket Section -->
+        <section id="assign" class="card assign-card">
             <h2>Assign Ticket</h2>
+            <!-- Assignment Form Here -->
             <form id="assignment-form">
                 <div class="form-group">
                     <label for="technician1"><i class="fas fa-user"></i> Select Technician:</label>
@@ -102,6 +161,9 @@
                         <option value="Ramesh">Ramesh</option>
                         <option value="Virat Kohli">Virat Kohli</option>
                         <option value="A B D">A B D</option>
+                        <option value="Ishanth Sharma">Ishanth Sharma</option>
+                        <option value="Chri Gayle">Chri Gayle</option>
+                        <option value="Shreyas Iyer">Shreyas Iyer</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -123,8 +185,63 @@
             </form>
         </section>
     </main>
-
+    
     <script>
+
+        // Data for the chart (sample data, you can replace it with real data)
+        const labels = ['J P Nagar', 'Jayanagar', 'Vijayanagar', 'Chichkpet', 'T Block','Basavanagudi','Dollars Colony'];
+        const ticketData = {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Tickets Raised',
+                data: [12, 19, 3, 5, 8,4,8], // Sample numbers, replace with actual ticket counts
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(25, 192, 192, 0.7)',
+                    'rgba(12, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(25, 192, 192, 1)',
+                    'rgba(12, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Configuration of the chart
+        const config = {
+            type: 'bar', // You can change it to 'line', 'pie', etc.
+            data: ticketData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        };
+
+        // Render the chart
+        const ticketChart = new Chart(
+            document.getElementById('ticketChart'),
+            config
+        );
+
         function sign() {
             var tec_name = $("#technician1").val();
             var tk_name = $("#ticket1").val();
