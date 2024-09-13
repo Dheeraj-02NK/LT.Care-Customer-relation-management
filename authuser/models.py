@@ -9,6 +9,7 @@ class AuthUser(models.Model):
     email = models.CharField(max_length= 200)
     phone = models.IntegerField()
     password = models.CharField(max_length=50)
+    role = models.CharField(max_length=50, blank=True)
 
     
 

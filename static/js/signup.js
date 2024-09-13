@@ -14,10 +14,11 @@ function signup(){
     let phone = $("#phone").val();
     let email = $("#email").val();
     let password = $("#password").val();
+    let role = $("#role").val();
     $.ajax({
         type:'POST',
         url:'/create_user/',
-        data:{"fullname":fullname, "phone":phone, "email":email, "password":password},
+        data:{"fullname":fullname, "phone":phone, "email":email, "password":password, "role": role},
         success: function(data){
             if (data){
                 window.location.replace('/view_user')

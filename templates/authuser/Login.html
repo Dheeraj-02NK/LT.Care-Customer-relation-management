@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <title>LT.Care | Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
             <div class="input-forms">
                 <div class="forms">
                     <label></label>
-                    <input id="input" type="text" placeholder="Enter your number">
+                    <input id="mob" type="text" placeholder="Enter your number">
                     <p id="message"></p>
                 </div>
                 <div class="forms">
@@ -26,13 +27,48 @@
                     <input type="password" placeholder="Enter Password" id="password">
                 </div>
                 <div class="forms form-button">
-                    <button onclick="checkAuth()" type="submit">Submit</button>
-                    <button onclick="signup()" type="Sign">Signup</button>
+                    <button onclick="checkAuth()" type="submit">Login</button>
+                    <!-- <button onclick="signup()" type="Sign">Signup</button> -->
                 </div>
             </div>
         </div>
     </div>
-    <script src="{% static 'js/login.js' %}"></script>
+    <!-- <script src="{% static 'js/login.js' %}"></script> -->
+     <script>
+        function checkAuth()
+        {
+            var mob = $('#mob').val();
+            var passd = $('#password').val();
+            
+            $.ajax({
+                type:'POST',
+                url:'/login_check/',
+                data:{"mob":mob, "password":passd},
+                success: function(data){
+                   if (data["status"] == "pass")
+                   {
+                    console.log("Welcome ", data["name"]);
+                    if(data["role"] == "Employee")
+                    {
+                        window.location.replace("/employee")
+                    }
+                    else if(data["role"] == "Customer")
+                    {
+                        window.location.replace("/ticket")
+                    }
+                    else if(data["role"] == "Admin")
+                    {
+                        window.location.replace("/view_user")
+                    }
+                   }
+                   else
+                   {
+                    alert("login failed");
+                   }
+                }
+            });
+        }
+     </script>
 </body>
 
 </html>

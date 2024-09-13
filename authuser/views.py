@@ -1,4 +1,4 @@
-from typing import Any
+# from typing import Any
 from django.shortcuts import render
 from .models import AuthUser
 from rest_framework.views import APIView
@@ -8,6 +8,7 @@ from django.http import JsonResponse
 # Create your views here.
 def main(request):
     return render(request, 'authuser/index.html')
+
 def login(request):
     return render(request, 'authuser/login.html')
 def signup(request):
@@ -19,11 +20,13 @@ class CreateUser(APIView):
         email = request.POST['email']
         phone = request.POST['phone']
         password = request.POST['password']
+        role = request.POST['role']
         user = AuthUser()
         user.fullname = fullname
         user.email = email
         user.phone = phone
         user.password = password
+        user.role = role
         user.save()
         return JsonResponse({"status":"pass"})
     
@@ -40,10 +43,23 @@ class edit_user(APIView):
         email1 = request.POST['email']
         phone1 = request.POST['phone']
         password1 = request.POST['password']
+        role = request.POST['role']
         print(password1)
-        userdata = AuthUser.objects.filter(id=uid).update(fullname=fullname1,email=email1,phone=phone1, password=password1)
+        userdata = AuthUser.objects.filter(id=uid).update(fullname=fullname1,email=email1,phone=phone1, password=password1, role=role)
         # print("********: ", userdata)
         return JsonResponse({"status":"pass"})
+
+
+class login_check(APIView):
+    def post(self, request):
+        mob = request.POST['mob']
+        password = request.POST['password']
+        ent = AuthUser.objects.filter(phone=mob,password=password).values()
+        if(len(ent) > 0):
+            return JsonResponse({"status":"pass", "uid": ent[0]["phone"], "role": ent[0]["role"], "name": ent[0]["fullname"]})
+        else:
+            return JsonResponse({"status":"fail"})
+
 
 class ViewStaff(TemplateView):
     template_name = 'view_user.html'
@@ -52,6 +68,3 @@ class ViewStaff(TemplateView):
         userdata = AuthUser.objects.all()
         context['userdata'] = userdata
         return context
-
-
-

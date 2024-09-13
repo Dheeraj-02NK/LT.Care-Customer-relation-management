@@ -162,6 +162,7 @@
                             <th>Email</th>
                             <th>Password</th>
                             <th>Phone</th>
+                            <th>Role</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -172,6 +173,7 @@
                             <td class="email">{{ user.email }}</td>
                             <td class="password">{{ user.password }}</td>
                             <td class="phone">{{ user.phone }}</td>
+                            <td class="phone">{{ user.role }}</td>
                             <td>
                                 <button class="edit-btn" onclick="editRow('{{ user.id }}')">Edit</button>
                                 <button class="delete-btn" onclick="deleteUser('{{ user.id }}')">Delete</button>
@@ -182,6 +184,7 @@
                             <td><input type="text" id="email1{{ user.id }}" value="{{ user.email }}"></td>
                             <td><input type="text" id="password1{{ user.id }}" value="{{ user.password }}"></td>
                             <td><input type="text" id="phone1{{ user.id }}" value="{{ user.phone }}"></td>
+                            <td><input type="text" id="role{{ user.id }}" value="{{ user.role }}"></td>
                             <td>
                                 <button class="edit-btn" onclick='saveChanges("{{ user.id }}");'>Save</button>
                                 <button class="edit-btn" onclick="cancelEdit('{{ user.id }}')">Cancel</button>
@@ -202,13 +205,14 @@
             var email = $('#email1'+id).val();
             var password = $('#password1'+id).val();
             var phone = $('#phone1'+id).val();
+            var role = $('#role'+id).val();
 
             // console.log(fullname) 
             if (confirm('Are you sure you want to edit this user?')) {
                 $.ajax({
                     type: 'POST',
                     url: '/edit_user/',
-                    data: { "id": id, "fullname": fullname, "email": email, "password": password, "phone": phone },
+                    data: { "id": id, "fullname": fullname, "email": email, "password": password, "phone": phone, "role": role },
                     success: function (data) {
                         if (data) {
                             window.location.replace('/view_user');
