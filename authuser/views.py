@@ -11,6 +11,7 @@ def main(request):
 
 def login(request):
     return render(request, 'authuser/login.html')
+
 def signup(request):
     return render(request, 'authuser/signup.html')
 
@@ -56,15 +57,26 @@ class login_check(APIView):
         password = request.POST['password']
         ent = AuthUser.objects.filter(phone=mob,password=password).values()
         if(len(ent) > 0):
+            request.session["user_data"] = ent[0]["fullname"]
             return JsonResponse({"status":"pass", "uid": ent[0]["phone"], "role": ent[0]["role"], "name": ent[0]["fullname"]})
         else:
             return JsonResponse({"status":"fail"})
 
 
+class logout(APIView):
+    def post(self, request):
+        request.session["user_data"] = ""
+        return JsonResponse({"status":"pass"})
+       
+
 class ViewStaff(TemplateView):
     template_name = 'view_user.html'
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
+        print("***********:request ", self.request.session["user_data"])
         userdata = AuthUser.objects.all()
         context['userdata'] = userdata
+        context["currentuser"] = self.request.session["user_data"]
         return context
+
+

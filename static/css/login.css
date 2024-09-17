@@ -8,7 +8,7 @@ body{
 display: flex;
 justify-content: center;
 align-items: center;
-background-image: url('images/logsigBG.jpg');
+
 background-position: center;
 background-size: cover;
 background-repeat: no-repeat;
@@ -36,7 +36,7 @@ height: 600px;
 
 .heading h1{
     font-size: 50px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Inria Sans", sans-serif;
 }
 .forms{
     display: flex;
@@ -47,7 +47,7 @@ height: 600px;
 }
 .input-forms label{
     font-size: 17px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Inria Sans", sans-serif;
     text-align: left;
 }
 
@@ -60,14 +60,14 @@ height: 600px;
     color: #ffffff;
     background-color: blue;
     border: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Inria Sans", sans-serif;
     margin: 30px 0 ;
     
 }
 
 .input-forms input{
     font-size: 17px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Inria Sans", sans-serif;
     border: none;
     outline: none;
     border-bottom: 1px solid gray;
@@ -78,6 +78,6 @@ height: 600px;
     align-items: center;
     gap: 20px;
     flex-direction: row;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Inria Sans", sans-serif;
     margin-bottom: 20px;
 }

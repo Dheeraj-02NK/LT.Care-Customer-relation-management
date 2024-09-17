@@ -21,7 +21,7 @@ function signup(){
         data:{"fullname":fullname, "phone":phone, "email":email, "password":password, "role": role},
         success: function(data){
             if (data){
-                window.location.replace('/view_user')
+                window.location.replace('/login')
             }
         }
     })

@@ -48,7 +48,7 @@ body{
 }
 .input-forms label{
     font-size: 17px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Inria Sans", sans-serif;
     text-align: left;
 }
 
@@ -62,14 +62,14 @@ body{
     border: 0;
     margin: 10px;
     font-size: 15px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Inria Sans", sans-serif;
     margin-bottom: 20px;
     
 }
 
 .input-forms input{
     font-size: 17px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Inria Sans", sans-serif;
     border: none;
     outline: none;
     border-bottom: 1px solid gray;
