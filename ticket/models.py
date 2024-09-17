@@ -7,10 +7,10 @@ class Ticket(models.Model):
     phone_number = models.CharField(max_length=15)  # To handle phone numbers with country codes
     address = models.TextField()  # For potentially long addresses
     ISSUE_CHOICES = [
-        ('software', 'Software Issue'),
-        ('damage', 'Damage Parts'),
-        ('hardware', 'Hardware Issue'),
-        ('general', 'General Services'),
+        ('software issue', 'Software Issue'),
+        ('damaged parts', 'Damaged Parts'),
+        ('hardware issue', 'Hardware Issue'),
+        ('general service', 'General Services'),
     ]
     issue = models.CharField(max_length=20, choices=ISSUE_CHOICES)  # Issue choices
     STATUS_CHOICES = [
