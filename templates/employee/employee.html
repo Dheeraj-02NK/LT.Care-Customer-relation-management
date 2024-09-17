@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html> 
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LT.Care Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: "Inria Sans", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .nav-buttons .btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            margin-right: 100px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 8px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navbar button:hover {
+            background-color: #666;
+        }
+
+        /* Sidebar styles */
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: #fff;
+            padding-top: 20px;
+            border-right: 1px solid #ddd;
+        }
+
+        .sidebar h1 {
+            margin-left: 15px;
+            font-size: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .sidebar ul li a.section.active {
+            background-color: #f5f5f5;
+            font-weight: 500;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-left: 1px solid #ddd;
+        }
+
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.212);
+            padding: 40px;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .card h3 {
+            margin-right: 20px;
+        }
+
+        .status-button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: "Inria Sans", sans-serif;
+            font-weight: 400;
+        }
+
+        .status-button:hover {
+            background-color: #444;
+        }
+
+        .update-status {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .update-status select {
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+       
+        .sta {
+            background-color: #444;
+            color: white;
+            font-family: "Inria Sans", sans-serif;
+            border: none;
+            font-weight: 400;  
+        }
+    </style>
+    <script>
+        function toggleStatus(cardId) {
+            const updateDiv = document.getElementById('update-' + cardId);
+            updateDiv.style.display = updateDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function switchSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Remove active class from all sidebar links
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Show the selected section
+            document.getElementById(section).style.display = 'block';
+
+            // Add active class to the clicked link
+            document.querySelector(`.sidebar a[href="#${section}"]`).classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set default active section
+            switchSection('home');
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div style="font-size: 25px; font-weight: 500;">LT.Care</div>
+        <div class="nav-buttons">
+            <button class="btn"><i class="fas fa-bell"></i></button>
+            <button class="btn"><i class="fas fa-cog"></i></button>
+            <button class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h1>Welcome, {{ currentuser }}</h1>
+            <ul>
+                <li><a href="#home" class="section active" onclick="switchSection('home')">Home</a></li>
+                <li><a href="#tickets" class="section" onclick="switchSection('tickets')">Tickets raised</a></li>
+                <!-- <li><a href="{% url 'profile' %}">Profile</a></li> -->
+                <li><a href="#feedback" class="section" onclick="switchSection('feedback')">Feedback</a></li>
+            </ul>
+        </aside>
+        <!-- Content -->
+        <div class="content">
+            <div id="home" class="section-content">
+                <div class="heading">
+                    <h1>HOME</h1>
+                </div>
+                <!-- Home content goes here -->
+            </div>
+            <div id="tickets" class="section-content" style="display: none;">
+                <div class="heading">
+                    <h1>TICKET LIST</h1>
+                </div>
+
+                <div class="card-container">
+                    <div class="card">
+                        <div>
+                            <h3>Ticket ID: 001</h3>
+                            <p><strong>Address:</strong> #297 , 4th main road JP nagar</p>
+                            <p><strong>Phone No:</strong> 9782340988</p>
+                            <p><strong>Technician Name:</strong> Shashi</p>
+                        </div>
+                        <div>
+                            <button class="status-button" onclick="toggleStatus(2)">Status:
+                            <select class="sta" id="checkstatus">
+                                <option value="Ticket raised">Ticket raised</option>
+                                <option value="Technician assigned">Technician assigned</option>
+                                <option value="Resolved">Resolved</option>
+                            </select>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <div id="update-2" class="update-status"> 
+                        <label for="status-2">Update:</label>
+                        <select id="status-2">
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div> -->
+                </div>
+            </div>
+            <div id="feedback" class="section-content" style="display: none;">
+                <div class="heading">
+                    <h1>FEEDBACK</h1>
+                </div>
+                <!-- Feedback content goes here -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
