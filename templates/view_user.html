@@ -1,0 +1,613 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LT.Care Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: "Inria Sans", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .navbar {        
+            background-color: #333;
+            color: white;
+            padding: 10px 30px; /* Added more padding for a balanced look */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed; /* Makes the navbar fixed at the top of the page */
+            top: 0;
+            left: 0;
+            width: 100%; /* Ensures the navbar spans the full width */
+            z-index: 1000;
+            font-family: "Inria Sans", sans-serif;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            background-color: #00000000;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .sidebar-toggle.show {
+            display: block;
+        }
+
+        .nav-buttons .btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .logout-btn{
+            margin-right: 100px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+             /* Adjust for navbar height */
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            height: calc(100vh - 50px);
+            position: fixed;
+            top: 50px;
+            left: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 100;
+            border-right: 1px solid #ddd;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .sidebar-menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .sidebar .sidebar-menu a.active, .sidebar .sidebar-menu a:hover {
+            color: #007bff;
+            background-color: #f4f4f4;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            margin-top: 5%;
+            margin-left: 22%; /* Adjust margin to account for the sidebar width */
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transition: margin-left 0.3s ease;
+        }
+
+        .content.expanded {
+            margin-left: 0;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        .user-table, .ticket-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .user-table th, .user-table td,
+        .ticket-table th, .ticket-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .user-table th, .ticket-table th {
+            background-color: #f4f4f4;
+        }
+
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .delete-btn:hover {
+            background-color: #ff1a1a;
+        }
+
+        .edit-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .edit-form {
+            display: none;
+        }
+
+        /* Style for the form container */
+#createuser {
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the form labels */
+#createuser label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* Style for the input fields */
+#createuser input[type="text"],
+#createuser input[type="email"],
+#createuser input[type="password"],
+#createuser select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-sizing: border-box;
+}
+
+/* Style for the submit button */
+#submitUserBtn {
+    width: 100%;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 500;
+}
+
+#submitUserBtn:hover {
+    background-color: #000000;
+    color: #fff;
+}
+
+/* Style for spacing between elements */
+#createrole, #submitUserBtn {
+    margin-top: 10px;
+}
+
+
+        .ticket-table .ticket-id {
+            font-weight: bold;
+        }
+
+        .ticket-table td.status-open {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .ticket-table td.status-closed {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <button class="sidebar-toggle show" onclick="toggleSidebar()"><i class="fas fa-ellipsis-h"></i></button>
+            <button class="sidebar-toggle hidden" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+            LT.Care
+        </div>
+        <div class="nav-buttons">
+            <button class="btn"><i class="fas fa-bell"></i></button>
+            <button class="btn"><i class="fas fa-cog"></i></button>
+            <button class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <ul class="sidebar-menu">
+                <h1> Welcome, {{ currentuser }}</h1>
+                <li><a href="#" data-target="homesection">Home</a></li>
+                <li><a href="#" data-target="userSection" class="active">Users</a></li>
+                <li><a href="#" data-target="customerSection">Customers</a></li>
+                <li><a href="#" data-target="employeeSection">Employees</a></li>
+                <li><a href="#" data-target="technicianSection">Technicians</a></li>
+                <li><a href="#" data-target="ticketSection">Tickets</a></li>
+                <li><a href="#" data-target="createuser">Create User</a></li>
+            </ul>
+        </aside>
+
+        <main class="content" id="content">
+            {% block sidebar %}
+
+            <div id="createuser" class="section">
+                <h1>Create user</h1>
+                <label for="creatfullname">Full Name:</label>
+                <input type="text" id="createfullname" name="createfullname"><br>
+              
+                <label for="createphone">Phone:</label>
+                <input type="text" id="createphone" name="createphone"><br>
+              
+                <label for="email">Email:</label>
+                <input type="email" id="createemail" name="createemail"><br>
+              
+                <label for="password">Password:</label>
+                <input type="password" id="createpassword" name="createpassword"><br>
+              
+                <label for="createrole">Role:</label>
+                <select id="createrole" name="createrole">
+                  <option value="Technician">Technician</option>
+                  <option value="Techlead">Techlead</option>
+                  <option value="Employee">Employee</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Customer">Customer</option>
+                </select><br>
+              
+                <button id="submitUserBtn" onclick="createnewusers()">Submit</button>
+              </div>
+              
+                
+            
+            <div id="userSection" class="section active">
+                
+                
+                <h1>User List</h1>
+                <table class="user-table" id="userTable">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in userdata %}
+                        <tr class="user-row" data-role="{{ user.role }}" id="row-{{ user.id }}">
+                            <td class="fullname">{{ user.fullname }}</td>
+                            <td class="email">{{ user.email }}</td>
+                            <td class="password">{{ user.password }}</td>
+                            <td class="phone">{{ user.phone }}</td>
+                            <td class="role">{{ user.role }}</td>
+                            <td>
+                                <button class="edit-btn" onclick="editRow('{{ user.id }}')">Edit</button>
+                                <button class="delete-btn" onclick="deleteUser('{{ user.id }}')">Delete</button>
+                            </td>
+                        </tr>
+                        <tr id="form-{{ user.id }}" class="edit-form">
+                            <td><input type="text" id="fullname1{{ user.id }}" value="{{ user.fullname }}"></td>
+                            <td><input type="text" id="email1{{ user.id }}" value="{{ user.email }}"></td>
+                            <td><input type="text" id="password1{{ user.id }}" value="{{ user.password }}"></td>
+                            <td><input type="text" id="phone1{{ user.id }}" value="{{ user.phone }}"></td>
+                            <td><input type="text" id="role{{ user.id }}" value="{{ user.role }}"></td>
+                            <td>
+                                <button class="edit-btn" onclick='saveChanges("{{ user.id }}");'>Save</button>
+                                <button class="edit-btn" onclick="cancelEdit('{{ user.id }}')">Cancel</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endblock %}
+            <div id="customerSection" class="section">
+                <h1>Customer List</h1>
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in userdata %}
+                        {% if user.role == 'Customer' %}
+                        <tr id="row-{{ user.id }}">
+                            <td class="fullname">{{ user.fullname }}</td>
+                            <td class="email">{{ user.email }}</td>
+                            <td class="password">{{ user.password }}</td>
+                            <td class="phone">{{ user.phone }}</td>
+                            <td class="role">{{ user.role }}</td>
+                            <td>
+                                <button class="edit-btn" onclick="editRow('{{ user.id }}')">Edit</button>
+                                <button class="delete-btn" onclick="deleteUser('{{ user.id }}')">Delete</button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="employeeSection" class="section">
+                <h1>Employee List</h1>
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in userdata %}
+                        {% if user.role == 'Employee' %}
+                        <tr id="row-{{ user.id }}">
+                            <td class="fullname">{{ user.fullname }}</td>
+                            <td class="email">{{ user.email }}</td>
+                            <td class="password">{{ user.password }}</td>
+                            <td class="phone">{{ user.phone }}</td>
+                            <td class="role">{{ user.role }}</td>
+                            <td>
+                                <button class="edit-btn" onclick="editRow('{{ user.id }}')">Edit</button>
+                                <button class="delete-btn" onclick="deleteUser('{{ user.id }}')">Delete</button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="technicianSection" class="section">
+                <h1>Technician List</h1>
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in userdata %}
+                        {% if user.role == 'Technician' %}
+                        <tr id="row-{{ user.id }}">
+                            <td class="fullname">{{ user.fullname }}</td>
+                            <td class="email">{{ user.email }}</td>
+                            <td class="password">{{ user.password }}</td>
+                            <td class="phone">{{ user.phone }}</td>
+                            <td class="role">{{ user.role }}</td>
+                            <td>
+                                <button class="edit-btn" onclick="editRow('{{ user.id }}')">Edit</button>
+                                <button class="delete-btn" onclick="deleteUser('{{ user.id }}')">Delete</button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="ticketSection" class="section">
+                <h1>Ticket List</h1>
+                <table class="ticket-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ticket-id">TCK123</td>
+                            <td>Login Issue</td>
+                            <td>User unable to login</td>
+                            <td class="status-open">Open</td>
+                            <td>High</td>
+                        </tr>
+                        <tr>
+                            <td class="ticket-id">TCK124</td>
+                            <td>Page Not Found</td>
+                            <td>404 error on homepage</td>
+                            <td class="status-closed">Closed</td>
+                            <td>Medium</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function saveChanges(id) {
+            var fullname = $('#fullname1' + id).val();
+            var email = $('#email1' + id).val();
+            var password = $('#password1' + id).val();
+            var phone = $('#phone1' + id).val();
+            var role = $('#role' + id).val();
+
+            if (confirm('Are you sure you want to edit this user?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/edit_user/',
+                    data: { "id": id, "fullname": fullname, "email": email, "password": password, "phone": phone, "role": role },
+                    success: function (data) {
+                        if (data) {
+                            window.location.replace('/view_user');
+                        }
+                    }
+                });
+            }
+        }
+
+        function deleteUser(id) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/delete_user/',
+                    data: { "id": id },
+                    success: function (data) {
+                        if (data) {
+                            window.location.replace('/view_user');
+                        }
+                    }
+                });
+            }
+        }
+
+        function createnewusers(){
+            let fullname = $("#createfullname").val();
+            let phone = $("#createphone").val();
+            let email = $("#createemail").val();
+            let password = $("#createpassword").val();
+            let role = $("#createrole").val();
+            $.ajax({
+                type:'POST',
+                url:'/create_user/',
+                data:{"fullname":fullname, "phone":phone, "email":email, "password":password, "role": role},
+                success: function(data){
+                    if (data){
+                        window.location.replace('/view_user')
+                    }
+                }
+            })
+        }
+
+        function editRow(id) {
+            $('#row-' + id).hide();
+            $('#form-' + id).show();
+        }
+
+        function cancelEdit(id) {
+            $('#form-' + id).hide();
+            $('#row-' + id).show();
+        }
+
+        function showSection(sectionId) {
+            $('.section').removeClass('active');
+            $('#' + sectionId).addClass('active');
+            $('.sidebar-menu a').removeClass('active');
+            $('.sidebar-menu a[data-target="' + sectionId + '"]').addClass('active');
+        }
+
+        function toggleSidebar() {
+            var sidebar = $('#sidebar');
+            var content = $('#content');
+            var toggleBtn = $('.sidebar-toggle.show');
+
+            if (sidebar.hasClass('hidden')) {
+                sidebar.removeClass('hidden');
+                content.removeClass('expanded');
+                toggleBtn.html('<i class="fas fa-times"></i>');
+            } else {
+                sidebar.addClass('hidden');
+                content.addClass('expanded');
+                toggleBtn.html('<i class="fas fa-ellipsis-h"></i>');
+            }
+        }
+
+        $(document).ready(function() {
+            // Handle sidebar menu clicks
+            $('.sidebar-menu a').on('click', function() {
+                var target = $(this).data('target');
+                showSection(target);
+            });
+
+            // Show the 'userSection' initially
+            showSection('userSection');
+        });
+    </script>
+</body>
+</html>
