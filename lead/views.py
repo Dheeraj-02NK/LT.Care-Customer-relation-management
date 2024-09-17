@@ -35,7 +35,7 @@ class Viewtkassign(TemplateView):
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         userdata = Lead.objects.all()
-        context['userdata'] = userdata
+        context = {'userdata':userdata, 'userid':self.request.session['user_id']}
         return context
 
 class edit_user(APIView):

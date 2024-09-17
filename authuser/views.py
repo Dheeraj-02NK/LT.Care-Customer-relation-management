@@ -1,9 +1,10 @@
 # from typing import Any
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .models import AuthUser
 from rest_framework.views import APIView
 from django.views.generic.base import TemplateView
 from django.http import JsonResponse
+
 
 # Create your views here.
 def main(request):
@@ -58,6 +59,7 @@ class login_check(APIView):
         ent = AuthUser.objects.filter(phone=mob,password=password).values()
         if(len(ent) > 0):
             request.session["user_data"] = ent[0]["fullname"]
+            request.session['user_id'] = ent[0]['cid']
             return JsonResponse({"status":"pass", "uid": ent[0]["phone"], "role": ent[0]["role"], "name": ent[0]["fullname"]})
         else:
             return JsonResponse({"status":"fail"})

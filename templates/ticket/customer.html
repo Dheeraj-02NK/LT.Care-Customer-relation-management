@@ -308,13 +308,13 @@
                 <div class="form-container">
                     <h1>Raise a Ticket</h1>
 
-                    <label for="phone">Phone Number</label>
+                    
                     <input type="text" name="phone" id="phone" placeholder="Enter your phone number" required>
 
-                    <label for="address">Address</label>
+                    
                     <input type="text" name="address" id="address" placeholder="Enter your address" required>
 
-                    <label for="issue">Issue</label>
+                    
                     <select name="issue" id="issue" required>
                         <option value="" disabled selected>Select Issue</option>
                         <option value="software">Software Issue</option>
@@ -322,7 +322,7 @@
                         <option value="hardware">Hardware Issue</option>
                         <option value="general">General Services</option>
                     </select>
-
+                    <input type="hidden" id="user_id"  value="{{userid}}">
                     <button class="submit-btn" onclick="submitTicket()">Submit</button>
 
                     <p id="thank-you" class="thank-you-message" style="display: none;">Thank you, we will get back to you soon!</p>
@@ -344,7 +344,7 @@
                     </div>
                     <div class="progress-line-between"></div>
                     <div class="step">
-                        <div class="label">Technician <br>Assigned</div>
+                        <div class="label">Technician <br>  Assigned</div>
                         <div class="icon">3</div>
                     </div>
                     <div class="progress-line-between"></div>
@@ -395,6 +395,23 @@
             document.getElementById('ticket-form').style.display = 'none';
             document.getElementById('track-ticket').style.display = 'none';
             document.getElementById('feedback-form').style.display = 'block';
+        }
+
+        function submitTicket() {
+            let phone = $("#phone").val();
+            let address = $("#address").val();
+            let issue = $("#issue").val();
+            let user_id = $("#user_id").val();
+            $.ajax({
+                type:'POST',
+                url:'/create_ticket/',
+                data:{"phone":phone, "address":address, "issue":issue, "user_id":user_id},
+                success: function(data){
+                    if (data){
+                        window.location.replace('/ticket')
+                    }
+                }
+            })
         }
     </script>
 </body>
