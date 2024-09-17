@@ -70,7 +70,7 @@
             if (confirm('Are you sure you want to edit this user?')) {
                 $.ajax({
                     type: 'POST',
-                    url: "edit_user",
+                    url: "{% url 'edit_user' %}",
                     data: { "id": id, "fullname": fullname, "email": email, "password": password, "phone": phone },
                     success: function (data) {
                         if (data) {

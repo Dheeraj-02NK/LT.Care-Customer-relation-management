@@ -69,6 +69,10 @@ body{
                     {
                         window.location.replace("/view_user")
                     }
+                    else if(data["role"] == "Techlead")
+                    {
+                        window.location.replace("/lead")
+                    }
                    }
                    else
                    {
@@ -77,6 +81,7 @@ body{
                 }
             });
         }
+        
      </script>
 </body>
 
