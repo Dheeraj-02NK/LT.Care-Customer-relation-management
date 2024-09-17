@@ -144,8 +144,8 @@ main.container {
     top: auto;
     left: 0;
     width: 200px;
-    height: 65%;
-    background-color: #333;
+    height: 80%;
+    background-color: rgba(51, 51, 51,0.5);
     padding-top: 60px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }

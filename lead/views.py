@@ -6,7 +6,9 @@ from django.http import JsonResponse
 
 # Create your views here.
 def leading(request):
-    return render(request, 'lead/lead.html')
+    context = {}
+    context["currentuser"] = request.session["user_data"]
+    return render(request, 'lead/lead.html',context)
 
 class Createtkassign(APIView):
     def post(self, request):
@@ -45,3 +47,4 @@ class edit_user(APIView):
         password1 = request.POST['password']
         userdata = Lead.objects.filter(id=uid).update(teach_name=fullname1,tick_name=email1,lead_date=password1, lead_name=phone1)
         return JsonResponse({"status":"pass"})
+    

@@ -30,13 +30,14 @@
                 <li><a href="#technician"><i class="fas fa-users"></i> Technician Information</a></li>
                 <li><a href="#tickets"><i class="fas fa-ticket-alt"></i> Tickets</a></li>
                 <li><a href="#assign"><i class="fas fa-tasks"></i> Assign Ticket</a></li>
+                <li><a href={% url 'Viewtkassign' %}><i class="fas fa-check-circle"></i> View Assigned Ticket</a></li>
             </ul>
         </nav>
     </aside>
-
     <main class="container">
         <!-- Home Section -->
         <section id="home" >
+            <h1>Welcome {{currentuser}}</h1>
             <section id="analysis" class="card">
                 <h2>Ticket Analysis by Location</h2>
                 <canvas id="ticketChart" width="250" height="100"></canvas>
