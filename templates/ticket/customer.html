@@ -2,7 +2,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LT.Care Dashboard</title>
@@ -376,7 +376,26 @@
 
     <script>
         function submitTicket() {
-            document.getElementById('thank-you').style.display = 'block';
+           // document.getElementById('thank-you').style.display = 'block';
+            let phone = $("#phone").val();
+            let address = $("#address").val();
+            let issue = $("#issue").val();
+            $.ajax({
+                type:"POST",
+                url:"/create_ticket/",
+                data:
+                {
+                    "phone":phone,
+                    "address":address,
+                    "issue":issue
+                },
+                success:function(data){
+                    if(data){
+                        alert("Success")
+                    }
+                }
+            })
+
         }
 
         function showForm() {

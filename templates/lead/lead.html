@@ -49,13 +49,16 @@
             <h2>Technician Information</h2>
             <div class="card-content">
                 <!-- Technician Cards Here -->
-                <div class="card-item">
-                    <h3>Rohit Sharma</h3>
-                    <p><strong>ID:</strong> 1</p>
-                    <p><strong>Specialization:</strong> Electrical</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
-                <div class="card-item">
+             {% for user in customer %}
+             {% if user.role == "Technician" %}
+             <div class="card-item">
+                <p><strong>ID:</strong> {{user.id}}</p>
+                <p><strong>Username:</strong> {{user.fullname}}</p>
+                <p><strong>Phone:</strong> {{user.phone}}</p>
+            </div>
+             {% endif %}
+             {% endfor %}
+                <!-- <div class="card-item">
                     <h3>Shubman Gill</h3>
                     <p><strong>ID:</strong> 2</p>
                     <p><strong>Specialization:</strong> Plumbing</p>
@@ -96,7 +99,7 @@
                     <p><strong>ID:</strong> 8</p>
                     <p><strong>Specialization:</strong> Electrical</p>
                     <p><strong>Status:</strong> Available</p>
-                </div>
+                </div> -->
             </div>
         </section>
 
@@ -105,11 +108,12 @@
             <h2>Tickets</h2>
             <div class="card-content">
                 <!-- Tickets Cards Here -->
-                 
+            {% for user in ticket1 %}     
                 <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 101</p>
-                    <p><strong>Description:</strong> Fix kitchen sink</p>
+                    <p><strong>Ticket ID:</strong>{{user.t_id}}</p>
+                    <p><strong>Description:</strong>{{user.issue}} </p>
                     <p><strong>Status:</strong> Open</p>
+            {% endfor %}
                 </div>
                 <div class="card-item">
                     <p><strong>Ticket ID:</strong> 102</p>
@@ -156,22 +160,30 @@
             <form id="assignment-form">
                 <div class="form-group">
                     <label for="technician1"><i class="fas fa-user"></i> Select Technician:</label>
+                    
                     <select id="technician1" name="technician1" class="form-control">
-                        <option value="Rohit Sharma">Rohit Sharma</option>
-                        <option value="Shubman Gill">Shubman Gill</option>
+                        {% for user in customer %}
+                    {% if user.role == "Technician" %}
+                        <option value="{{user.fullname}}">{{user.fullname}}</option>
+                        <!-- <option value="Shubman Gill">Shubman Gill</option>
                         <option value="Ramesh">Ramesh</option>
                         <option value="Virat Kohli">Virat Kohli</option>
                         <option value="A B D">A B D</option>
                         <option value="Ishanth Sharma">Ishanth Sharma</option>
                         <option value="Chri Gayle">Chri Gayle</option>
-                        <option value="Shreyas Iyer">Shreyas Iyer</option>
+                        <option value="Shreyas Iyer">Shreyas Iyer</option> -->
+                        {% endif %}
+                    {% endfor %}
                     </select>
+                    
                 </div>
                 <div class="form-group">
                     <label for="ticket1"><i class="fas fa-ticket-alt"></i> Select Ticket:</label>
                     <select id="ticket1" name="ticket1" class="form-control">
-                        <option value="Fix kitchen sink">Fix kitchen sink</option>
-                        <option value="Repair electrical wiring">Repair electrical wiring</option>
+                        {% for user in ticket1 %}  
+                        <option value="{{user.issue}}">{{user.issue}}</option>
+                        {% endfor %}
+                        <!-- <option value="Repair electrical wiring">Repair electrical wiring</option> -->
                     </select>
                 </div>
                 <div class="form-group">

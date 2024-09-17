@@ -3,11 +3,14 @@ from .models import Lead
 from rest_framework.views import APIView
 from django.views.generic.base import TemplateView
 from django.http import JsonResponse
+from authuser.models import AuthUser
+from ticket.models import Ticket
 
 # Create your views here.
 def leading(request):
-    context = {}
-    context["currentuser"] = request.session["user_data"]
+    customers = AuthUser.objects.all()
+    ticket1=Ticket.objects.all()
+    context = {"currentuser" :request.session["user_data"], 'customer':customers,'ticket1':ticket1}
     return render(request, 'lead/lead.html',context)
 
 class Createtkassign(APIView):

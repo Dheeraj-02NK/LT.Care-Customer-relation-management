@@ -13,14 +13,14 @@ def ticket(request):
 
 class CreateTicket(APIView):
     def post(self, request):
-        phone = request.POST['phoneno'] 
-        address = request.POST['addressloc'] 
-        issuetype = request.POST['issuetype'] 
-        issue = Ticket()
-        issue.phone_number = phone
-        issue.address = address
-        issue.issue = issuetype
-        issue.save()
+        phone = request.POST['phone'] 
+        address = request.POST['address'] 
+        issuetype = request.POST['issue'] 
+        issues = Ticket()
+        issues.phone_number= phone
+        issues.address = address
+        issues.issue = issuetype
+        issues.save()
         return JsonResponse({"status":"pass"})
     
 class ViewIssue(TemplateView):
