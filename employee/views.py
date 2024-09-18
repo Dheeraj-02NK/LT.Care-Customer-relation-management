@@ -35,21 +35,22 @@ class Viewtkassign(TemplateView):
 
         return context
     
+def update_ticket_status(request):
+    if request.method == 'POST':
+        ticket_id = request.POST.get('ticket_id')
+        new_status = request.POST.get('status')
 
+        try:
+            ticket = Ticket.objects.get(t_id=ticket_id)
+            ticket.status = new_status
+            ticket.save()
 
-# class update_status(APIView):
-#     def post(self, request):
-#         uid = request.POST['id']
-#         fullname1 = request.POST['fullname']
-#         email1 = request.POST['email']
-#         phone1 = request.POST['phone']
-#         password1 = request.POST['password']
-#         role = request.POST['role']
-#         print(password1)
-#         userdata = AuthUser.objects.filter(id=uid).update(fullname=fullname1,email=email1,phone=phone1, password=password1, role=role)
-#         # print("********: ", userdata)
-#         return JsonResponse({"status":"pass"})
-    
+            return JsonResponse({'message': 'Status updated successfully!', 'refresh': True})
+        except Ticket.DoesNotExist:
+            return JsonResponse({'message': 'Ticket not found!'}, status=404)
+
+    return JsonResponse({'message': 'Invalid request!'}, status=400)
+
 
 
 
