@@ -35,3 +35,18 @@ class Viewtkassign(TemplateView):
 
         return context
     
+@csrf_exempt
+def update_ticket_status(request):
+    if request.method == 'POST':
+        ticket_id = request.POST.get('ticket_id')
+        new_status = request.POST.get('status')
+
+        try:
+            ticket = Ticket.objects.get(t_id=ticket_id)
+            ticket.status = new_status
+            ticket.save()
+            return JsonResponse({'success': True, 'message': 'Status updated successfully!'})
+        except Ticket.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Ticket not found.'})
+
+    
