@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <title>LT.Care | Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inria Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #444;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .navbar .logo span{
+            color: red;
+        }
+
+        .navbar .welcome {
+            font-size: 18px;
+            font-weight: 400;
+            padding-right: 100px;
+        }
+
+        /* Container for form and image */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            width: 120%;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 80px; /* To account for the navbar */
+        }
+
+        /* Image styling */
+        .image-div {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .image-div img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Form styling */
+        .form-div {
+            flex: 1;
+        }
+
+        .heading h1 {
+            text-align: center;
+            font-size: 28px;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .forms {
+            margin-bottom: 10px;
+        }
+
+        .forms input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            font-family: 'Inria Sans', sans-serif;
+            border-bottom: 1px solid #444;
+        }
+
+        .form-button button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            font-family: 'Inria Sans', sans-serif;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-button button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">LT<span>.</span>Care</div>
+        <div class="welcome">Welcome to LT.Care</div>
+    </div>
+
+    <!-- Main content container -->
+    <div class="container">
+        <!-- Image div -->
+        <div class="image-div">
+            <img src="{% static 'images/siglog.png' %}" alt="Login Illustration">
+        </div>
+
+        <!-- Form div -->
+        <div class="form-div">
+            
+            
+            <div class="input-forms">
+                <h1>Login</h1>
+                <div class="forms"></div>
+                    <p>Don't have an account? <a href="/signup">Sign up</a></p>
+                </div>
+                <div class="forms">
+                    <label></label>
+                    <input id="mob" type="text" placeholder="Enter your number">
+                    <p id="message"></p>
+                </div>
+                <div class="forms">
+                    <label></label>
+                    <input type="password" placeholder="Enter Password" id="password">
+                </div>
+                <div class="forms form-button">
+                    <button onclick="checkAuth()" type="submit">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for login check -->
+    <script>
+        function checkAuth() {
+            var mob = $('#mob').val();
+            var passd = $('#password').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/login_check/',
+                data: {
+                    "mob": mob,
+                    "password": passd
+                },
+                success: function(data) {
+                    if (data["status"] == "pass") {
+                        console.log("Welcome ", data["name"]);
+                        if (data["role"] == "Employee") {
+                            window.location.replace("/emp1")
+                        } else if (data["role"] == "Customer") {
+                            window.location.replace("/ticket")
+                        } else if (data["role"] == "Admin") {
+                            window.location.replace("/view_user")
+                        } else if (data["role"] == "Techlead") {
+                            window.location.replace("/lead")
+                        }
+                    } else {
+                        alert("Login failed");
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

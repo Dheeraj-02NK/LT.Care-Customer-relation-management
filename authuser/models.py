@@ -5,6 +5,7 @@ class AuthUser(models.Model):
 
   
     # uid = models.AutoField(primary_key=True, default="")
+    cid = models.AutoField(primary_key=True,default='')
     fullname= models.CharField(max_length=200)
     email = models.CharField(max_length= 200)
     phone = models.IntegerField()

@@ -1,0 +1,222 @@
+.navbar-section {
+    display: flex;
+    gap: 100px;
+    justify-content: space-around;
+    align-items: center;
+    background: #000000;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-link li {
+    list-style: none;
+}
+
+.navLogo h1 {
+    color: rgb(255, 255, 255);
+    font-family: "Inria Sans", sans-serif;
+    font-weight: 600;
+}
+
+.navLogo h1 span {
+    color: rgb(50, 255, 0);
+    font-family: "Inria Sans", sans-serif;
+}
+
+.nav-link li a {
+    text-decoration: none;
+    color: white;
+    font-family: "Inria Sans", sans-serif;
+    font-weight: 600;
+}
+
+.nav-link button {
+    padding: 5px 10px;
+    font-family: "Inria Sans", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: #000;
+    color: #fff;
+    border-color: #fff;
+    border-radius: 10px;
+    height: 35px;
+    width: 80px;
+}
+
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10% 0;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.hero-left img {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.hero-right {
+    flex-basis: 30%;
+}
+
+.hero-right h1 {
+    font-size: 5.5rem;
+    font-family: "Inria Sans", sans-serif;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+
+.hero-right p {
+    font-size: 25px;
+    font-family: "Inria Sans", sans-serif;
+    letter-spacing: 2px;
+    margin: 0;
+    text-align: justify;
+}
+
+.hero-right h1 span {
+    color: red;
+}
+
+.section1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section1 h1 {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 25px;
+    margin-top: 60px;
+}
+
+.srvice-section {
+    background-color: rgb(238, 238, 238);
+}
+
+.srvic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.issue {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px 5px gray;
+    height: 300px;
+    width: 400px;
+    background-color: white;
+    margin-bottom: 80px;
+}
+
+.issue h1 {
+    font-size: 25px;
+    font-family: "Inria Sans", sans-serif;
+    text-align: center;
+}
+
+.issue h4 {
+    font-size: 18px;
+    font-family: "Inria Sans", sans-serif;
+    text-align: justify;
+    margin: 40px;
+}
+
+.issue button {
+    background-color: #000;
+    color: #fff;
+    font-family: "Inria Sans", sans-serif;
+    font-weight: 600;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    width: 150px;
+}
+
+.work {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.work h1 {
+    text-align: center;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 40px;
+    margin-top: 60px;
+}
+
+.work-comp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.work-comp img {
+    width: 500px;
+}
+
+.work h1 span {
+    color: red;
+}
+
+.issu {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px 5px rgb(131, 131, 131);
+    height: 200px;
+    width: 300px;
+    background-color: white;
+    margin-bottom: 30px;
+}
+
+.review-section {
+    background-color: #d3d3d3;
+}
+
+.issu h1 {
+    text-align: center;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 40px;
+    margin: 0px;
+}
+
+.issu h4 {
+    text-align: center;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 20px;
+}
+
+.issu button {
+    background-color: #000;
+    color: #fff;
+    font-family: "Inria Sans", sans-serif;
+    font-weight: 500;
+    height: 35px;
+    border: none;
+    border-radius: 10px;
+    width: 130px;
+}
+
