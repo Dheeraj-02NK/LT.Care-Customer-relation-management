@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="navbar">
@@ -26,7 +29,8 @@
                 <thead>
                     <tr>
                         <th>Technician Name</th>
-                        <th>Ticket</th>
+                        <th>Issue</th>
+                        <th>Ticket ID</th>
                         <th>Date</th>
                         <th>Lead name</th>
                         <th>Actions</th>
@@ -35,8 +39,9 @@
                 <tbody>
                     {% for user in userdata %}
                     <tr id="row-{{ user.id }}">
-                        <td class="fullname">{{ user.teach_name }}</td>
-                        <td class="email">{{ user.tick_name }}</td>
+                        <td class="fullname">{{ user.tec_name }}</td>
+                        <td class="email">{{ user.tk_name }}</td>
+                        <td class="email">{{ user.id }}</td>
                         <td class="password">{{ user.lead_date }}</td>
                         <td class="phone">{{ user.lead_name }}</td>
                         <td>
@@ -44,11 +49,20 @@
                             <button class="delete-btn" onclick="deleteUser('{{ user.id }}')">Delete</button>
                         </td>
                     </tr>
-                    <tr id="form-{{ user.id }}" class="edit-form">
-                        <td><input type="text" id="fullname1{{ user.id }}" value="{{ user.teach_name }}"></td>
-                        <td><input type="text" id="email1{{ user.id }}" value="{{ user.tick_name }}"></td>
+                    <tr id="form-{{ user.id }}" class="edit-form" style="display: none;">
+                        <td>
+                            <select id="fullname1{{ user.id }}" class="form-control">
+                                {% for user1 in customer %}
+                                    {% if user1.role == "Technician" %}
+                                        <option value="{{ user1.fullname }}">{{ user1.fullname }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td class="email">{{ user.tk_name }}</td>
+                        <td class="email">{{ user.id }}</td>
                         <td><input type="date" id="password1{{ user.id }}" value="{{ user.lead_date }}"></td>
-                        <td><input type="text" id="phone1{{ user.id }}" value="{{ user.lead_name }}"></td>
+                        <td class="phone">{{ user.lead_name }}</td>
                         <td>
                         <button class="edit-btn" onclick='saveChanges("{{ user.id }}");'>Save</button>
                         <button class="edit-btn" onclick="cancelEdit('{{ user.id }}')">Cancel</button>
@@ -63,15 +77,13 @@
         function saveChanges(id)
         {
             var fullname = $('#fullname1'+id).val();
-            var email = $('#email1'+id).val();
             var password = $('#password1'+id).val();
-            var phone = $('#phone1'+id).val();
 
             if (confirm('Are you sure you want to edit this user?')) {
                 $.ajax({
                     type: 'POST',
                     url: "{% url 'edit_user' %}",
-                    data: { "id": id, "fullname": fullname, "email": email, "password": password, "phone": phone },
+                    data: { "id": id, "fullname": fullname, "password": password},
                     success: function (data) {
                         if (data) {
                             window.location.replace('/lead/Viewtkassign/');
