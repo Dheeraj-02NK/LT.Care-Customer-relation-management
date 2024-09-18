@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'lead',
     'rest_framework',
     'ticket',
+    'employee',
 ]
 
 MIDDLEWARE = [
