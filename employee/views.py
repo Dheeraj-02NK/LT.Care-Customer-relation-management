@@ -27,7 +27,7 @@ class Viewtkassign(TemplateView):
 
         # Query both userdata and tickets
         userdata = employee.objects.all()
-        tickets = Ticket.objects.all().values('t_id', 'phone_number', 'address', 'issue','status')  # Fixed the tickets query
+        tickets = Ticket.objects.all().values('t_id', 'phone_number', 'address', 'issue','status', 'rating', 'comment')  # Fixed the tickets query
 
         # Add both userdata and tickets to the context
         context['userdata'] = userdata
@@ -50,7 +50,4 @@ def update_ticket_status(request):
             return JsonResponse({'message': 'Ticket not found!'}, status=404)
 
     return JsonResponse({'message': 'Invalid request!'}, status=400)
-
-
-
 

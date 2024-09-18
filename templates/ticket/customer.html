@@ -96,6 +96,16 @@
             background-color: #ddd;
         }
 
+        .sidebar ul li a.section.active {
+            background-color: #f5f5f5;
+            font-weight: 500;
+            color: #007bff;
+          }
+
+          .sidebar ul li a:hover {
+            background-color: #f5f5f5;
+          }
+
         /* Main content area */
         .content {
             flex-grow: 1;
@@ -259,7 +269,7 @@
         }
 
         #ticket-table th {
-            background-color: #f4f4f4;
+            background-color: #007bff;
             font-weight: 500;
         }
 
@@ -372,7 +382,7 @@
                     </div>
 
                     <textarea name="feedback" id="feedback" rows="5" placeholder="Provide your feedback"></textarea>
-                    <button class="submit-btn">Submit Feedback</button>
+                    <button class="submit-btn" onclick="submitFeedback()">Submit Feedback</button>
                 </div>
             </div>
 
@@ -382,6 +392,8 @@
                 <table id="ticket-table">
                     <thead>
                         <tr>
+                            <th>Ticket_id</th>
+                            <th>Phone</th>
                             <th>Issue</th>
                             <th>Status</th>
                             <th>Rating</th>
@@ -458,6 +470,9 @@
                         data.forEach(function (ticket) {
                             tableBody.append(`
                                 <tr>
+
+                                    <td>${ticket.t_id}</td>
+                                    <td>${ticket.phone_number}</td>
                                     <td>${ticket.issue}</td>
                                     <td>${ticket.status}</td>
                                     <td>${ticket.rating}</td>
@@ -489,6 +504,33 @@
                 }
             })
         }
+
+        function submitFeedback() {
+            const rating = $("input[name='rating']:checked").val(); // Get the selected star rating
+            const feedback = $("#feedback").val(); // Get the feedback text
+            const user_id = $("#user_id").val(); // Get the user ID
+        
+            $.ajax({
+                type: 'POST',
+                url: '/submit_feedback/', // URL for submitting feedback
+                data: {
+                    "rating": rating,
+                    "feedback": feedback,
+                    "user_id": user_id
+                },
+                success: function (data) {
+                    if (data.status === "success") {
+                        alert("Feedback submitted successfully!");
+                        $("#feedback").val(""); // Clear the feedback textarea
+                        $("input[name='rating']").prop('checked', false); // Uncheck the stars
+                    }
+                },
+                error: function (error) {
+                    console.log('Error submitting feedback:', error);
+                }
+            });
+        }
+        
     </script>
 </body>
 

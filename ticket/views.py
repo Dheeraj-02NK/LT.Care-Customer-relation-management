@@ -36,7 +36,29 @@ class ViewIssue(TemplateView):
         userdata = Ticket.objects.all()
         context['userdata'] = userdata
         return context
-    
+
+
+
+class SubmitFeedback(APIView):
+    def post(self, request):
+        rating = request.data.get('rating')
+        comment = request.data.get('feedback')  # Use "feedback" for the comment
+        user_id = request.data.get('user_id')
+
+        try:
+            # Find the latest resolved ticket for the user
+            ticket = Ticket.objects.filter(cid=user_id, status='Resolved').order_by('-t_id').first()
+            if ticket:
+                ticket.rating = rating
+                ticket.comment = comment  # Update the comment field
+                ticket.save()
+                return JsonResponse({"status": "success"})
+            else:
+                return JsonResponse({"status": "error", "message": "No resolved tickets found."}, status=404)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+
 def ticket_history(request):
     # Fetch 'user_id' from the session
     user_id = request.session.get('user_id')
@@ -45,7 +67,7 @@ def ticket_history(request):
     if user_id:
         try:
             # Fetch only resolved tickets for the current user
-            tickets = Ticket.objects.filter(cid=user_id).values('t_id', 'issue', 'status', 'rating')
+            tickets = Ticket.objects.filter(cid=user_id).values('t_id', 'issue', 'status', 'rating', 'phone_number')
             print(f"Resolved Tickets fetched: {tickets}")  # Debugging line
             return JsonResponse(list(tickets), safe=False)
         except Exception as e:
