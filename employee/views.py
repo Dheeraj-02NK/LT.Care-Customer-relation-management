@@ -20,3 +20,6 @@ class Viewtkassign(TemplateView):
         userdata = employee.objects.all()
         context['userdata']= userdata
         return context
+
+
+
