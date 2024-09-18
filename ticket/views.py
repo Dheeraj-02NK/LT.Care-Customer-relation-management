@@ -45,7 +45,7 @@ def ticket_history(request):
     if user_id:
         try:
             # Fetch only resolved tickets for the current user
-            tickets = Ticket.objects.filter(cid=user_id, status='Resolved').values('t_id', 'issue', 'status', 'rating')
+            tickets = Ticket.objects.filter(cid=user_id).values('t_id', 'issue', 'status', 'rating')
             print(f"Resolved Tickets fetched: {tickets}")  # Debugging line
             return JsonResponse(list(tickets), safe=False)
         except Exception as e:

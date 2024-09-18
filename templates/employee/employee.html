@@ -1,5 +1,5 @@
 {% load static %}
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    
     <style>
         body {
             font-family: "Inria Sans", sans-serif;
@@ -75,8 +75,6 @@
             background-color: #fff;
             padding-top: 20px;
             border-right: 1px solid #ddd;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.212);
-            overflow-y: auto;
         }
 
         .sidebar h1 {
@@ -178,13 +176,13 @@
                 text-align: center;
             }
         }
-
+       
         .sta {
             background-color: #444;
             color: white;
             font-family: "Inria Sans", sans-serif;
             border: none;
-            font-weight: 400;
+            font-weight: 400;  
         }
     </style>
     <script>
@@ -256,30 +254,30 @@
                 </div>
 
                 <div class="card-container">
-                    {% for ticket in tickets %}
-                    
-                        <div class="card">
-                            <div>
-                                <h3>Ticket ID: {{ ticket.t_id }}</h3>
-                                <p><strong>Address:</strong> {{ ticket.address }}</p>
-                                <p><strong>Phone No:</strong> {{ ticket.phone_number }}</p>
-                                <p><strong>Issue:</strong> {{ ticket.issue }}</p>
-                            </div>
-
-                            <div>
-                                <select class="sta" id="checkstatus-{{ ticket.t_id }}">
-                                    <option value="Ticket Raised">Ticket raised</option>
-                                    <option value="Technician Assigned">Technician assigned</option>
-                                    <option value="Resolved">Resolved</option>
-                                </select>
-                                
-
-                            </div>
+                    <div class="card">
+                        <div>
+                            <h3>Ticket ID: 001</h3>
+                            <p><strong>Address:</strong> #297 , 4th main road JP nagar</p>
+                            <p><strong>Phone No:</strong> 9782340988</p>
+                            <p><strong>Technician Name:</strong> Shashi</p>
                         </div>
-                    
-                    {% endfor %}
-
-
+                        <div>
+                            <button class="status-button" onclick="toggleStatus(2)">Status:
+                            <select class="sta" id="checkstatus">
+                                <option value="Ticket raised">Ticket raised</option>
+                                <option value="Technician assigned">Technician assigned</option>
+                                <option value="Resolved">Resolved</option>
+                            </select>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <div id="update-2" class="update-status"> 
+                        <label for="status-2">Update:</label>
+                        <select id="status-2">
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div> -->
                 </div>
             </div>
             <div id="feedback" class="section-content" style="display: none;">
@@ -290,7 +288,5 @@
             </div>
         </div>
     </div>
-    
 </body>
-
 </html>

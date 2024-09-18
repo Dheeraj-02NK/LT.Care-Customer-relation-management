@@ -54,7 +54,6 @@
             border: none;
             color: white;
             font-size: 18px;
-
             cursor: pointer;
         }
 
@@ -108,32 +107,32 @@
         /* Professional Form styles */
         .form-container {
             background-color: white;
+            font-family: 'Inria Sans', sans-serif;
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 500px;
-            font-family: 'Inria Sans', sans-serif;
             margin: 0 auto;
         }
 
         .form-container h1 {
             font-size: 24px;
+            font-family: 'Inria Sans', sans-serif;
             color: #333;
             margin-bottom: 20px;
-            font-family: 'Inria Sans', sans-serif;
         }
 
         .form-container label {
+            font-family: 'Inria Sans', sans-serif;
             font-size: 14px;
             color: #555;
             margin-bottom: 5px;
-            font-family: 'Inria Sans', sans-serif;
         }
 
         .form-container input[type="text"],
         .form-container select {
-            padding: 12px;
             font-family: 'Inria Sans', sans-serif;
+            padding: 12px;
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ccc;
@@ -143,10 +142,10 @@
         }
 
         .form-container button.submit-btn {
+            font-family: 'Inria Sans', sans-serif;
             background-color: #007bff;
             color: white;
             padding: 12px;
-            font-family: 'Inria Sans', sans-serif;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -155,6 +154,7 @@
         }
 
         .form-container button.submit-btn:hover {
+            font-family: 'Inria Sans', sans-serif;
             background-color: #0056b3;
         }
 
@@ -169,72 +169,41 @@
         /* Tracking steps styles */
         .progress-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-top: 30px;
-            position: relative;
-            padding: 20px 0;
         }
 
         .step {
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .step .icon {
-            height: 50px;
-            width: 50px;
-            background-color: #ddd;
-            border-radius: 50%;
-            display: inline-block;
-            line-height: 50px;
-            font-size: 20px;
-            color: white;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s;
-        }
-
-        .step .label {
-            font-size: 14px;
-            color: #555;
-            margin-top: 5px;
-            font-weight: normal;
-        }
-
-        .active .icon {
-            background-color: #007bff;
-        }
-
-        .active .label {
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .step.completed .icon {
-            background-color: #28a745;
-        }
-
-        .step.completed .label {
-            color: #28a745;
-            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .progress-line-between {
-            flex-grow: 1;
-            height: 4px;
+            height: 5px;
+            width: 50px;
             background-color: #ddd;
-            position: relative;
-            top: 2px;
+            margin: 0 10px;
         }
 
-        .progress-line-between.active {
-            background-color: #007bff;
+        .icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
         }
 
-        .progress-line-between.completed {
-            background-color: #28a745;
+        .step.active .icon {
+            background-color: green;
+            color: white;
+        }
+
+        .step .label {
+            margin-top: 10px;
+            font-size: 14px;
         }
 
         /* Feedback form */
@@ -332,9 +301,9 @@
             <h1> Welcome {{ currentuser }}</h1>
             <ul>
                 <li><a href="#" onclick="showForm()">Raise Ticket</a></li>
-                <li><a href="#" onclick="showTrack()">Track Ticket</a></li>
+                <!-- <li><a href="#" onclick="showTrack()">Track Ticket</a></li> -->
                 <li><a href="#" onclick="showFeedbackForm()">Feedback</a></li>
-                <li><a href="#" onclick="tickethistory()">Ticket History</a></li>
+                <li><a href="#" onclick="tickethistory()">Track Tickets</a></li>
             </ul>
         </aside>
 
@@ -365,25 +334,27 @@
             <!-- Track Ticket Progress -->
             <div id="track-ticket" style="display: none;">
                 <h1>Track Your Ticket</h1>
+                
+
                 <div class="progress-container">
-                    <div class="step active">
+                    <!-- Step 1: Ticket Raised -->
+                    <div class="step" id="step1">
                         <div class="label">Ticket Raised</div>
                         <div class="icon">1</div>
                     </div>
                     <div class="progress-line-between"></div>
-                    <div class="step">
-                        <div class="label">Pending</div>
+            
+                    <!-- Step 2: Technician Assigned -->
+                    <div class="step" id="step2">
+                        <div class="label">Technician <br> Assigned</div>
                         <div class="icon">2</div>
                     </div>
                     <div class="progress-line-between"></div>
-                    <div class="step">
-                        <div class="label">Technician <br> Assigned</div>
-                        <div class="icon">3</div>
-                    </div>
-                    <div class="progress-line-between"></div>
-                    <div class="step">
+            
+                    <!-- Step 3: Resolved -->
+                    <div class="step" id="step3">
                         <div class="label">Resolved</div>
-                        <div class="icon">4</div>
+                        <div class="icon">3</div>
                     </div>
                 </div>
             </div>
@@ -444,12 +415,30 @@
             document.getElementById('ticket-history').style.display = 'none';
         }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const status = "{{ status }}";  // Django will insert the ticket status dynamically
+    
+            // Apply active class based on the ticket status
+            if (status === "Ticket Raised") {
+                document.getElementById('step1').classList.add('active');
+            } else if (status === "Technician Assigned") {
+                document.getElementById('step1').classList.add('active');
+                document.getElementById('step2').classList.add('active');
+            } else if (status === "Resolved") {
+                document.getElementById('step1').classList.add('active');
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step3').classList.add('active');
+            }
+        });
+    
+
         function showFeedbackForm() {
             document.getElementById('ticket-form').style.display = 'none';
             document.getElementById('track-ticket').style.display = 'none';
             document.getElementById('feedback-form').style.display = 'block';
             document.getElementById('ticket-history').style.display = 'none';
         }
+
 
         function tickethistory() {
             document.getElementById('ticket-form').style.display = 'none';
