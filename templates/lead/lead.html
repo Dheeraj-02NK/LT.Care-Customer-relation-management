@@ -10,7 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="navbar">
@@ -31,6 +33,7 @@
                 <li><a href="#tickets"><i class="fas fa-ticket-alt"></i> Tickets</a></li>
                 <li><a href="#assign"><i class="fas fa-tasks"></i> Assign Ticket</a></li>
                 <li><a href={% url 'Viewtkassign' %}><i class="fas fa-check-circle"></i> View Assigned Ticket</a></li>
+                <li><a href={% url 'Viewtkassignall' %}><i class="fas fa-check-circle"></i> All Assigned Ticket</a></li>
             </ul>
         </nav>
     </aside>
@@ -49,54 +52,16 @@
             <h2>Technician Information</h2>
             <div class="card-content">
                 <!-- Technician Cards Here -->
-                <div class="card-item">
-                    <h3>Rohit Sharma</h3>
-                    <p><strong>ID:</strong> 1</p>
-                    <p><strong>Specialization:</strong> Electrical</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
-                <div class="card-item">
-                    <h3>Shubman Gill</h3>
-                    <p><strong>ID:</strong> 2</p>
-                    <p><strong>Specialization:</strong> Plumbing</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
-                <div class="card-item">
-                    <h3>Ramesh</h3>
-                    <p><strong>ID:</strong> 3</p>
-                    <p><strong>Specialization:</strong> Electrical</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
-                <div class="card-item">
-                    <h3>Virat Kohli</h3>
-                    <p><strong>ID:</strong> 4</p>
-                    <p><strong>Specialization:</strong> Electrical</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
-                <div class="card-item">
-                    <h3>A B D</h3>
-                    <p><strong>ID:</strong> 5</p>
-                    <p><strong>Specialization:</strong> Electrical</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
-                <div class="card-item">
-                    <h3>Ishanth Sharma</h3>
-                    <p><strong>ID:</strong> 6</p>
-                    <p><strong>Specialization:</strong> Electrical</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
-                <div class="card-item">
-                    <h3>Chri Gayle</h3>
-                    <p><strong>ID:</strong> 7</p>
-                    <p><strong>Specialization:</strong> Electrical</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
-                <div class="card-item">
-                    <h3>Shreyas Iyer</h3>
-                    <p><strong>ID:</strong> 8</p>
-                    <p><strong>Specialization:</strong> Electrical</p>
-                    <p><strong>Status:</strong> Available</p>
-                </div>
+             {% for user in customer %}
+             {% if user.role == "Technician" %}
+             <div class="card-item">
+                <h3>{{user.fullname}}</h3>
+                <p><strong>ID:</strong> {{user.id}}</p>
+                <p><strong>Phone:</strong> {{user.phone}}</p>
+                <p><strong>Email:</strong> {{user.email}}</p>
+            </div>
+             {% endif %}
+             {% endfor %}
             </div>
         </section>
 
@@ -105,48 +70,15 @@
             <h2>Tickets</h2>
             <div class="card-content">
                 <!-- Tickets Cards Here -->
-                 
+            {% for user in ticket1 %}     
+             {% if user.status == "Ticket Raised" %}
                 <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 101</p>
-                    <p><strong>Description:</strong> Fix kitchen sink</p>
-                    <p><strong>Status:</strong> Open</p>
+                    <p><strong>Ticket ID:</strong> {{user.t_id}}</p>
+                    <p><strong>Description:</strong> {{user.issue}} </p>
+                    <p><strong>Status:</strong> {{user.status}}</p>
                 </div>
-                <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 102</p>
-                    <p><strong>Description:</strong> Repair electrical wiring</p>
-                    <p><strong>Status:</strong> In Progress</p>
-                </div>
-                <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 103</p>
-                    <p><strong>Description:</strong> Fix kitchen sink</p>
-                    <p><strong>Status:</strong> Open</p>
-                </div>
-                <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 104</p>
-                    <p><strong>Description:</strong> Fix kitchen sink</p>
-                    <p><strong>Status:</strong> Open</p>
-                </div>
-                <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 105</p>
-                    <p><strong>Description:</strong> Fix kitchen sink</p>
-                    <p><strong>Status:</strong> Open</p>
-                </div>
-                <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 106</p>
-                    <p><strong>Description:</strong> Fix kitchen sink</p>
-                    <p><strong>Status:</strong> Open</p>
-                </div>
-                <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 107</p>
-                    <p><strong>Description:</strong> Fix kitchen sink</p>
-                    <p><strong>Status:</strong> Open</p>
-                </div>
-                <div class="card-item">
-                    <p><strong>Ticket ID:</strong> 108</p>
-                    <p><strong>Description:</strong> Fix kitchen sink</p>
-                    <p><strong>Status:</strong> Open</p>
-                </div>
-            </div>
+                {% endif %}
+            {% endfor %}
         </section>
 
         <!-- Assign Ticket Section -->
@@ -155,23 +87,26 @@
             <!-- Assignment Form Here -->
             <form id="assignment-form">
                 <div class="form-group">
-                    <label for="technician1"><i class="fas fa-user"></i> Select Technician:</label>
+                    <label for="technician1"><i class="fas fa-user"></i> Technician:</label>
                     <select id="technician1" name="technician1" class="form-control">
-                        <option value="Rohit Sharma">Rohit Sharma</option>
-                        <option value="Shubman Gill">Shubman Gill</option>
-                        <option value="Ramesh">Ramesh</option>
-                        <option value="Virat Kohli">Virat Kohli</option>
-                        <option value="A B D">A B D</option>
-                        <option value="Ishanth Sharma">Ishanth Sharma</option>
-                        <option value="Chri Gayle">Chri Gayle</option>
-                        <option value="Shreyas Iyer">Shreyas Iyer</option>
+                        <option value="" readonly style="cursor: not-allowed;">Select Technician</option>
+                    {% for user in customer %}
+                    {% if user.role == "Technician" %}
+                        <option value="{{user.fullname}}">{{user.fullname}}</option>
+                        {% endif %}
+                    {% endfor %}
                     </select>
+                    
                 </div>
                 <div class="form-group">
-                    <label for="ticket1"><i class="fas fa-ticket-alt"></i> Select Ticket:</label>
+                    <label for="ticket1"><i class="fas fa-ticket-alt"></i> Ticket:</label>
                     <select id="ticket1" name="ticket1" class="form-control">
-                        <option value="Fix kitchen sink">Fix kitchen sink</option>
-                        <option value="Repair electrical wiring">Repair electrical wiring</option>
+                        <option value="" readonly style="cursor: not-allowed;">Select Ticket</option>
+                        {% for user in ticket1 %}
+                        {% if user.status == "Ticket Raised" %}  
+                        <option value="{{user.issue}}">{{user.address}} , {{user.issue}}</option>
+                        {% endif %}
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
@@ -180,7 +115,7 @@
                 </div>
                 <div class="form-group">
                     <label for="tech-lead"><i class="fas fa-user-tie"></i> Tech Lead Name:</label>
-                    <input type="text" id="tech-lead" name="tech-lead" class="form-control" required>
+                    <input type="text" id="tech-lead" name="tech-lead" class="form-control" value="{{currentuser}}" readonly style="cursor: not-allowed;">
                 </div>
                 <button type="button" id="assign-button" class="btn-primary" onclick="sign()"><i class="fas fa-check-circle"></i> Assign Ticket</button>
             </form>
@@ -259,8 +194,8 @@
                     "ld_name": ld_name,
                 },
                 success: function (data) {
-                    alert("success");
-                    window.location.replace("Viewtkassign");
+                    alert("Technician is Successfully assigned");
+                    window.location.reload();
                 }
             });
         }
