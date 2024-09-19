@@ -1,0 +1,158 @@
+/* Reset and global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inria Sans", sans-serif;
+}
+
+body {
+    background-color: #f7f7f7;
+    color: #333;
+}
+header.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:  #333;
+    color: #fff;
+    padding: 15px 30px;
+}
+
+header .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+header .nav-buttons .btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+header .nav-buttons .btn:hover {
+    opacity: 0.9;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2.4em;
+    margin-bottom: 30px;
+}
+
+.content {
+    padding: 40px;
+}
+
+/* Table container */
+.table-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    max-width: 1500px;
+    margin: 0 auto;
+    border: 1.2px solid black;
+}
+
+table.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    font-size: 1.1em;
+    border: 1.2px solid black;
+}
+
+tbody td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    color: #34495e;
+    border: 1.2px solid black;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ecf0f1;
+}
+
+td {
+    font-size: 1.05em;
+    text-align: center;
+}
+
+/* Buttons for actions */
+.edit-btn, .delete-btn {
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1em;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+}
+
+.edit-btn:hover {
+    background-color: #1f618d;
+    transform: translateY(-3px);
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-3px);
+}
+
+/* Icons for edit and delete buttons */
+.edit-btn::before {
+    content: "\f044"; /* FontAwesome pencil icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+.delete-btn::before {
+    content: "\f1f8"; /* FontAwesome trash icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 10px;
+    }
+
+    table.user-table {
+        font-size: 0.9em;
+    }
+
+    .edit-btn, .delete-btn {
+        padding: 6px 12px;
+        font-size: 0.9em;
+    }
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}

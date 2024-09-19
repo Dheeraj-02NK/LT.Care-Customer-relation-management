@@ -1,0 +1,556 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LT.Care Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inria Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 8px;
+            margin-left: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .nav-buttons .btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            margin-right: 100px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Sidebar styles */
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar h1 {
+            margin: 15px;
+        }
+
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 18px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #ddd;
+        }
+
+        .sidebar ul li a.section.active {
+            background-color: #f5f5f5;
+            font-weight: 500;
+            color: #007bff;
+          }
+
+          .sidebar ul li a:hover {
+            background-color: #f5f5f5;
+          }
+
+        /* Main content area */
+        .content {
+            flex-grow: 1;
+            margin-left: 10px;
+            padding: 30px;
+            background-color: white;
+        }
+
+        /* Professional Form styles */
+        .form-container {
+            background-color: white;
+            font-family: 'Inria Sans', sans-serif;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-container h1 {
+            font-size: 24px;
+            font-family: 'Inria Sans', sans-serif;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            font-family: 'Inria Sans', sans-serif;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .form-container input[type="text"],
+        .form-container select {
+            font-family: 'Inria Sans', sans-serif;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .form-container button.submit-btn {
+            font-family: 'Inria Sans', sans-serif;
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .form-container button.submit-btn:hover {
+            font-family: 'Inria Sans', sans-serif;
+            background-color: #0056b3;
+        }
+
+        /* Thank you message */
+        .thank-you-message {
+            font-size: 18px;
+            color: green;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Tracking steps styles */
+        .progress-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .progress-line-between {
+            height: 5px;
+            width: 50px;
+            background-color: #ddd;
+            margin: 0 10px;
+        }
+
+        .icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .step.active .icon {
+            background-color: green;
+            color: white;
+        }
+
+        .step .label {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Feedback form */
+        #feedback-form {
+            display: none;
+        }
+
+        .rating-stars {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: row-reverse;
+            margin: 20px 0;
+        }
+
+        .rating-stars input {
+            display: none;
+        }
+
+        .rating-stars label {
+            font-size: 30px;
+            color: lightgray;
+            cursor: pointer;
+        }
+
+        .rating-stars input:checked~label,
+        .rating-stars label:hover,
+        .rating-stars label:hover~label {
+            color: gold;
+        }
+
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        #ticket-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        #ticket-table th,
+        #ticket-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+        }
+
+        #ticket-table th {
+            background-color: #007bff;
+            font-weight: 500;
+        }
+
+        #ticket-table tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        #ticket-table tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+
+        #ticket-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        #ticket-table td {
+            color: #333;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div style="font-size: 24px; font-weight: 500;">LT.Care</div>
+        <div class="nav-buttons">
+            <button class="btn"><i class="fas fa-bell"></i></button>
+            <button class="btn"><i class="fas fa-cog"></i></button>
+            <button class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h1> Welcome {{ currentuser }}</h1>
+            <ul>
+                <li><a href="#" onclick="showForm()">Raise Ticket</a></li>
+                <!-- <li><a href="#" onclick="showTrack()">Track Ticket</a></li> -->
+                <li><a href="#" onclick="showFeedbackForm()">Feedback</a></li>
+                <li><a href="#" onclick="tickethistory()">Track Tickets</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content">
+
+
+            <!-- Raise Ticket Section -->
+            <div id="ticket-form" class="active">
+                <div class="form-container">
+                    <h1>Raise a Ticket</h1>
+                    <input type="text" name="phone" id="phone" placeholder="Enter your phone number" required>
+                    <input type="text" name="address" id="address" placeholder="Enter your address" required>
+                    <select name="issue" id="issue" required>
+                        <option value="" disabled selected>Select Issue</option>
+                        <option value="software">Software Issue</option>
+                        <option value="damage">Damage Parts</option>
+                        <option value="hardware">Hardware Issue</option>
+                        <option value="general">General Services</option>
+                    </select>
+                    <input type="hidden" id="user_id" value="{{userid}}">
+                    <button class="submit-btn" onclick="submitTicket()">Submit</button>
+                    <p id="thank-you" class="thank-you-message" style="display: none;">Thank you, we will get back to
+                        you soon!</p>
+                </div>
+            </div>
+
+            <!-- Track Ticket Progress -->
+            <div id="track-ticket" style="display: none;">
+                <h1>Track Your Ticket</h1>
+                
+
+                <div class="progress-container">
+                    <!-- Step 1: Ticket Raised -->
+                    <div class="step" id="step1">
+                        <div class="label">Ticket Raised</div>
+                        <div class="icon">1</div>
+                    </div>
+                    <div class="progress-line-between"></div>
+            
+                    <!-- Step 2: Technician Assigned -->
+                    <div class="step" id="step2">
+                        <div class="label">Technician <br> Assigned</div>
+                        <div class="icon">2</div>
+                    </div>
+                    <div class="progress-line-between"></div>
+            
+                    <!-- Step 3: Resolved -->
+                    <div class="step" id="step3">
+                        <div class="label">Resolved</div>
+                        <div class="icon">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Form -->
+            <div id="feedback-form">
+                <div class="form-container">
+                    <h1>Feedback</h1>
+                    <div class="rating-stars">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                    </div>
+
+                    <textarea name="feedback" id="feedback" rows="5" placeholder="Provide your feedback"></textarea>
+                    <button class="submit-btn" onclick="submitFeedback()">Submit Feedback</button>
+                </div>
+            </div>
+
+            <!-- Ticket History Section -->
+            <div id="ticket-history" style="display: none;">
+                <h1>Resolved Tickets</h1>
+                <table id="ticket-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket_id</th>
+                            <th>Phone</th>
+                            <th>Issue</th>
+                            <th>Status</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticket-table-body">
+                        <!-- Tickets will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function submitTicket() {
+           // document.getElementById('thank-you').style.display = 'block';
+            let phone = $("#phone").val();
+            let address = $("#address").val();
+            let issue = $("#issue").val();
+            $.ajax({
+                type:"POST",
+                url:"/create_ticket/",
+                data:
+                {
+                    "phone":phone,
+                    "address":address,
+                    "issue":issue
+                },
+                success:function(data){
+                    if(data){
+                        alert("Success")
+                    }
+                }
+            })
+
+        }
+
+        function showForm() {
+            document.getElementById('ticket-form').style.display = 'block';
+            document.getElementById('track-ticket').style.display = 'none';
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('ticket-history').style.display = 'none';
+        }
+
+        function showTrack() {
+            document.getElementById('ticket-form').style.display = 'none';
+            document.getElementById('track-ticket').style.display = 'block';
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('ticket-history').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const status = "{{ status }}";  // Django will insert the ticket status dynamically
+    
+            // Apply active class based on the ticket status
+            if (status === "Ticket Raised") {
+                document.getElementById('step1').classList.add('active');
+            } else if (status === "Technician Assigned") {
+                document.getElementById('step1').classList.add('active');
+                document.getElementById('step2').classList.add('active');
+            } else if (status === "Resolved") {
+                document.getElementById('step1').classList.add('active');
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step3').classList.add('active');
+            }
+        });
+    
+
+        function showFeedbackForm() {
+            document.getElementById('ticket-form').style.display = 'none';
+            document.getElementById('track-ticket').style.display = 'none';
+            document.getElementById('feedback-form').style.display = 'block';
+            document.getElementById('ticket-history').style.display = 'none';
+        }
+
+
+        function tickethistory() {
+            document.getElementById('ticket-form').style.display = 'none';
+            document.getElementById('track-ticket').style.display = 'none';
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('ticket-history').style.display = 'block';
+
+            $.ajax({
+                type: 'GET',
+                url: '/ticket_history/',  // URL for fetching ticket history
+                success: function (data) {
+                    if (data) {
+                        let tableBody = $("#ticket-table-body");
+                        tableBody.empty();  // Clear any existing rows
+
+                        // Loop through tickets and add them to the table
+                        data.forEach(function (ticket) {
+                            tableBody.append(`
+                                <tr>
+
+                                    <td>${ticket.t_id}</td>
+                                    <td>${ticket.phone_number}</td>
+                                    <td>${ticket.issue}</td>
+                                    <td>${ticket.status}</td>
+                                    <td>${ticket.rating}</td>
+                                </tr>
+                            `);
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log('Error fetching ticket history:', error);
+                }
+            });
+        }
+
+
+        function submitTicket() {
+            let phone = $("#phone").val();
+            let address = $("#address").val();
+            let issue = $("#issue").val();
+            let user_id = $("#user_id").val();
+            $.ajax({
+                type: 'POST',
+                url: '/create_ticket/',
+                data: { "phone": phone, "address": address, "issue": issue, "user_id": user_id },
+                success: function (data) {
+                    if (data) {
+                        window.location.replace('/ticket')
+                    }
+                }
+            })
+        }
+
+        function submitFeedback() {
+            const rating = $("input[name='rating']:checked").val(); // Get the selected star rating
+            const feedback = $("#feedback").val(); // Get the feedback text
+            const user_id = $("#user_id").val(); // Get the user ID
+        
+            $.ajax({
+                type: 'POST',
+                url: '/submit_feedback/', // URL for submitting feedback
+                data: {
+                    "rating": rating,
+                    "feedback": feedback,
+                    "user_id": user_id
+                },
+                success: function (data) {
+                    if (data.status === "success") {
+                        alert("Feedback submitted successfully!");
+                        $("#feedback").val(""); // Clear the feedback textarea
+                        $("input[name='rating']").prop('checked', false); // Uncheck the stars
+                    }
+                },
+                error: function (error) {
+                    console.log('Error submitting feedback:', error);
+                }
+            });
+        }
+        
+    </script>
+</body>
+
+</html>

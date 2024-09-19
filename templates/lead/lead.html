@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Management System</title>
+    <link rel="stylesheet" href="{% static 'css/lead.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">LT.Care</div>
+        <div class="nav-buttons">
+            <button class="btn"><i class="fas fa-bell"></i></button>
+            <button class="btn"><i class="fas fa-cog"></i></button>
+            <button class="btn">Logout</button>
+        </div>
+    </header>
+
+    <!-- Sidebar Section -->
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#technician"><i class="fas fa-users"></i> Technician Information</a></li>
+                <li><a href="#tickets"><i class="fas fa-ticket-alt"></i> Tickets</a></li>
+                <li><a href="#assign"><i class="fas fa-tasks"></i> Assign Ticket</a></li>
+                <li><a href={% url 'Viewtkassign' %}><i class="fas fa-check-circle"></i> View Assigned Ticket</a></li>
+                <li><a href={% url 'Viewtkassignall' %}><i class="fas fa-check-circle"></i> All Assigned Ticket</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" >
+            <h1>Welcome {{currentuser}}</h1>
+            <section id="analysis" class="card">
+                <h2>Ticket Analysis by Location</h2>
+                <canvas id="ticketChart" width="250" height="100"></canvas>
+            </section>
+        </section> 
+
+        <!-- Technician Section -->
+        <section id="technician" class="card">
+            <h2>Technician Information</h2>
+            <div class="card-content">
+                <!-- Technician Cards Here -->
+             {% for user in customer %}
+             {% if user.role == "Technician" %}
+             <div class="card-item">
+                <h3>{{user.fullname}}</h3>
+                <p><strong>ID:</strong> {{user.id}}</p>
+                <p><strong>Phone:</strong> {{user.phone}}</p>
+                <p><strong>Email:</strong> {{user.email}}</p>
+            </div>
+             {% endif %}
+             {% endfor %}
+            </div>
+        </section>
+
+        <!-- Ticket Section -->
+        <section id="tickets" class="card ticket-section">
+            <h2>Tickets</h2>
+            <div class="card-content">
+                <!-- Tickets Cards Here -->
+            {% for user in ticket1 %}     
+             {% if user.status == "Ticket Raised" %}
+                <div class="card-item">
+                    <p><strong>Ticket ID:</strong> {{user.t_id}}</p>
+                    <p><strong>Description:</strong> {{user.issue}} </p>
+                    <p><strong>Status:</strong> {{user.status}}</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+
+        <!-- Assign Ticket Section -->
+        <section id="assign" class="card assign-card">
+            <h2>Assign Ticket</h2>
+            <!-- Assignment Form Here -->
+            <form id="assignment-form">
+                <div class="form-group">
+                    <label for="technician1"><i class="fas fa-user"></i> Technician:</label>
+                    <select id="technician1" name="technician1" class="form-control">
+                        <option value="" readonly style="cursor: not-allowed;">Select Technician</option>
+                    {% for user in customer %}
+                    {% if user.role == "Technician" %}
+                        <option value="{{user.fullname}}">{{user.fullname}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="ticket1"><i class="fas fa-ticket-alt"></i> Ticket:</label>
+                    <select id="ticket1" name="ticket1" class="form-control">
+                        <option value="" readonly style="cursor: not-allowed;">Select Ticket</option>
+                        {% for user in ticket1 %}
+                        {% if user.status == "Ticket Raised" %}  
+                        <option value="{{user.issue}}">{{user.address}} , {{user.issue}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assignment-date"><i class="fas fa-calendar-alt"></i> Assignment Date:</label>
+                    <input type="date" id="assignment-date" name="assignment-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="tech-lead"><i class="fas fa-user-tie"></i> Tech Lead Name:</label>
+                    <input type="text" id="tech-lead" name="tech-lead" class="form-control" value="{{currentuser}}" readonly style="cursor: not-allowed;">
+                </div>
+                <button type="button" id="assign-button" class="btn-primary" onclick="sign()"><i class="fas fa-check-circle"></i> Assign Ticket</button>
+            </form>
+        </section>
+    </main>
+    
+    <script>
+
+        // Data for the chart (sample data, you can replace it with real data)
+        const labels = ['J P Nagar', 'Jayanagar', 'Vijayanagar', 'Chichkpet', 'T Block','Basavanagudi','Dollars Colony'];
+        const ticketData = {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Tickets Raised',
+                data: [12, 19, 3, 5, 8,4,8], // Sample numbers, replace with actual ticket counts
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(25, 192, 192, 0.7)',
+                    'rgba(12, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(25, 192, 192, 1)',
+                    'rgba(12, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Configuration of the chart
+        const config = {
+            type: 'bar', // You can change it to 'line', 'pie', etc.
+            data: ticketData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        };
+
+        // Render the chart
+        const ticketChart = new Chart(
+            document.getElementById('ticketChart'),
+            config
+        );
+
+        function sign() {
+            var tec_name = $("#technician1").val();
+            var tk_name = $("#ticket1").val();
+            var ass_date = $("#assignment-date").val();
+            var ld_name = $("#tech-lead").val();
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'Createtkassign' %}",
+                data: {
+                    "tec_name": tec_name,
+                    "tk_name": tk_name,
+                    "ass_date": ass_date,
+                    "ld_name": ld_name,
+                },
+                success: function (data) {
+                    alert("Technician is Successfully assigned");
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

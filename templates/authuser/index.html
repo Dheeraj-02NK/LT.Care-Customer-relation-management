@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/css/index.css' %}">
+    <title>LT.care | Home</title>
+</head>
+
+<body>
+    <div class="navbar-section">
+        <div class="navLogo">
+            <h1>LT<span>.</span>Care</h1>
+        </div>
+        <div class="nav-link">
+            <li><a href="#">About</a></li>  <!--changes-->
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Support</a></li>
+            <button onclick="submit()" id="sub_btn">Login</button>
+        </div>
+    </div>
+    <script>
+        function submit() {
+            window.location.href = 'Login.html'
+        }
+    </script>
+
+    <!-- Hero section -->
+    <section>
+        <div class="hero-section">
+            <div class="hero-left">
+                <img src="{% static '/images/banner-img2.png'%}" alt="banner-img">
+            </div>
+            <div class="hero-right">
+                <h1>LT<span>.</span>Care</h1>
+                <p>We care for your Laptop. LT.Care is one of the leading laptop service providers with expert
+                    technicians</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="srvice-section">
+            <div class="section1">
+                <h1>Services</h1>
+            </div>
+            <div class="srvic">
+                <div class="issue">
+                    <h1>Software Services</h1>
+                    <h4>LT.Care's software support system provide one step solution for your software issues.</h4>
+                    <button class="more" onclick="submit()">Learn More >></button>
+                </div>
+                <div class="issue">
+                    <h1>Hardware Services</h1>
+                    <h4>LT.Care's skilled technicians fix all your hardware issues with autorized and genuine parts</h4>
+                    <button class="more" onclick="submit()">Learn More >></button>
+                </div>
+                <div class="issue">
+                    <h1>Damage Recovery</h1>
+                    <h4>LT.Care provides warranty to all the replaced parts upto 1 year</h4>
+                    <button class="more" onclick="submit()">Learn More >></button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="review-section">
+            <div class="section1">
+                <h1>Features</h1>
+            </div>
+            <div class="srvic">
+                <div class="issu">
+                    <h1>10k+</h1>
+                    <h4>Happy Customers</h4>
+                    <button class="more" onclick="submit()">Learn More >></button>
+                </div>
+                <div class="issu">
+                    <h1>500+</h1>
+                    <h4>Skilled Technicians</h4>
+                    <button class="more" onclick="submit()">Learn More >></button>
+                </div>
+                <div class="issu">
+                    <h1>200+</h1>
+                    <h4>Service Station</h4>
+                    <button class="more" onclick="submit()">Learn More >></button>
+                </div>
+                <div class="issu">
+                    <h1>10x</h1>
+                    <h4>Faster service</h4>
+                    <button class="more" onclick="submit()">Learn More >></button>
+                </div>
+                <div class="issu">
+                    <h1>4.8</h1>
+                    <h4>Customer feedback and<br> reviews</h4>
+                    <button class="more" onclick="submit()">Learn More >></button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="work">
+            <div class="work-heading">
+                <h1>Our <span>Expertise</span></h1>
+            </div>
+            <div class="work-comp">
+                <img src="{% static 'images/Laptop-logos.jpg' %}" alt="">
+                <img src="{% static 'images/Laptop-logos - Copy.jpg' %}" alt="">
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    function submit() {
+        window.location.href = '/signup'
+    }
+</script>
+
+</html>

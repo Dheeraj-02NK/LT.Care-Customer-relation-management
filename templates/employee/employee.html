@@ -1,0 +1,461 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LT.Care Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+  <style>
+    body {
+      font-family: "Inria Sans", sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .nav-buttons .btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .logout-btn {
+      margin-right: 100px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* Navbar styles */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
+      padding: 10px 20px;
+      color: white;
+    }
+
+    .navbar button {
+      background-color: #555;
+      color: white;
+      border: none;
+      padding: 8px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .navbar button:hover {
+      background-color: #666;
+    }
+
+    /* Sidebar styles */
+    .container {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+      width: 300px;
+      background-color: #fff;
+      padding-top: 20px;
+      border-right: 1px solid #ddd;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.212);
+      overflow-y: auto;
+    }
+
+    .sidebar h1 {
+      margin-left: 15px;
+      font-size: 20px;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      color: #333;
+      text-decoration: none;
+      padding: 10px 20px;
+      display: block;
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    .sidebar ul li a.section.active {
+      background-color: #f5f5f5;
+      font-weight: 500;
+      color: #007bff;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #f5f5f5;
+    }
+
+    .heading {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .content {
+      width: 100%;
+      padding: 20px;
+      background-color: #fff;
+      border-left: 1px solid #ddd;
+    }
+
+    .card-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      display: flex;
+      height: 100%;
+      width: 90%;
+      justify-content: space-around;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 10px 5px rgba(0, 0, 0, 0.212);
+      padding: 30px;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 500;
+      margin: 10px;
+    }
+
+    .card h3 {
+      margin-right: 20px;
+    }
+
+    .status-button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: "Inria Sans", sans-serif;
+      font-weight: 400;
+    }
+
+    .status-button:hover {
+      background-color: #444;
+    }
+
+    .update-status {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .update-status select {
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .sta {
+      width: 200px;
+      /* Adjust as needed */
+      padding: 10px;
+      border: 1px solid #ccc;
+      font-family: "Inria Sans", sans-serif;
+      border-radius: 10px;
+      background-color: #000000;
+      font-size: 16px;
+      color: #ffffff;
+      appearance: none;
+      /* Remove default arrow */
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5H7z" fill="%23fff"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .sta option {
+      color: #ffffff;
+    }
+
+    .sta:focus {
+      border-color: #ffffff;
+      /* Focus border color */
+      outline: none;
+      /* Remove default outline */
+    }
+
+    .sta option {
+      color: #ffffff;
+    }
+
+    .sta:focus {
+      border-color: #007bff;
+      /* Focus border color */
+      outline: none;
+      /* Remove default outline */
+    }
+
+    /* Table Styles */
+    #ticket-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 18px;
+      text-align: left;
+    }
+
+    #ticket-table th,
+    #ticket-table td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+    }
+
+    #ticket-table th {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+
+    #ticket-table tr {
+      border-bottom: 1px solid #ddd;
+    }
+
+    #ticket-table tr:nth-of-type(even) {
+      background-color: #f9f9f9;
+    }
+
+    #ticket-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    #ticket-table td {
+      color: #333;
+    }
+  </style>
+
+  <script>
+    function toggleStatus(cardId) {
+      const updateDiv = document.getElementById("update-" + cardId);
+      updateDiv.style.display =
+        updateDiv.style.display === "none" ? "block" : "none";
+    }
+
+    function switchSection(section) {
+      // Hide all sections
+      document.querySelectorAll(".section-content").forEach((content) => {
+        content.style.display = "none";
+      });
+
+      // Remove active class from all sidebar links
+      document.querySelectorAll(".sidebar a").forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      // Show the selected section
+      document.getElementById(section).style.display = "block";
+
+      // Add active class to the clicked link
+      document
+        .querySelector(`.sidebar a[href="#${section}"]`)
+        .classList.add("active");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Set default active section
+      switchSection("tickets");
+    });
+  </script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div style="font-size: 25px; font-weight: 500">LT.Care</div>
+    <div class="nav-buttons">
+      <button class="btn"><i class="fas fa-bell"></i></button>
+      <button class="btn"><i class="fas fa-cog"></i></button>
+      <button class="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h1>Welcome {{currentuser}}</h1>
+      <ul>
+        <li>
+          <a href="#home" class="section active" onclick="switchSection('home')">Home</a>
+        </li>
+        <li>
+          <a href="#tickets" class="section" onclick="switchSection('tickets')">Tickets raised</a>
+        </li>
+        <!-- <li><a href="{% url 'profile' %}">Profile</a></li> -->
+        <li>
+          <a href="#feedback" class="section" onclick="switchSection('feedback')">Feedback</a>
+        </li>
+
+      </ul>
+    </aside>
+    <!-- Content -->
+    <div class="content">
+      <div id="home" class="section-content" style="display: none">
+        <div class="heading">
+          <h1>HOME</h1>
+        </div>
+        <!-- Home content goes here -->
+      </div>
+      <div id="tickets" class="section-content">
+        <div class="heading">
+          <h1>Tickets</h1>
+        </div>
+
+        <div class="card-container">
+          {% for ticket in tickets %}
+
+          <div class="card">
+            <div>
+              <h3>Ticket ID: {{ ticket.t_id }}</h3>
+              <p><strong>Address:</strong> {{ ticket.address }}</p>
+              <p><strong>Phone No:</strong> {{ ticket.phone_number }}</p>
+              <p><strong>Issue:</strong> {{ ticket.issue }}</p>
+              <p><strong>Status:</strong> {{ ticket.status }}</p>
+            </div>
+
+            <div>
+              <select class="sta" id="checkstatus-{{ ticket.t_id }}">
+                <option value="" disabled selected>Select status</option>
+                <option value="Ticket Raised">Ticket raised</option>
+                <option value="Technician Assigned">
+                  Technician assigned
+                </option>
+                <option value="Resolved">Resolved</option>
+              </select>
+
+              <script>
+                function updateStatus(ticketId) {
+                  const selectElement = document.getElementById(
+                    `checkstatus-${ticketId}`
+                  );
+                  const selectedValue = selectElement.value;
+
+                  // Optional: Show an alert with the selected value
+                  alert(`Status updated to: ${selectedValue}`);
+
+                  // Refresh the page
+                  location.reload();
+                }
+              </script>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div id="feedback" class="section-content" style="display: none">
+        <div class="heading">
+          <h1>Feedback</h1>
+        </div>
+        <!-- Feedback content goes here -->
+        <h1>Resolved Tickets with Low Ratings</h1>
+        <table id="ticket-table">
+          <thead>
+            <tr>
+              <th>Ticket ID</th>
+              <th>Address</th>
+              <th>Phone No</th>
+              <th>Issue</th>
+              <th>Status</th>
+              <th>Rating</th>
+              <th>Comments</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ticket in tickets %}
+            {% if ticket.rating <= 3 and ticket.status == 'Resolved' %} <tr>
+              <td>{{ ticket.t_id }}</td>
+              <td>{{ ticket.address }}</td>
+              <td>{{ ticket.phone_number }}</td>
+              <td>{{ ticket.issue }}</td>
+              <td>{{ ticket.status }}</td>
+              <td>{{ ticket.rating }}</td>
+              <td>{{ ticket.comment }}</td>
+              </tr>
+              {% endif %}
+              {% empty %}
+              <tr>
+                <td colspan="7">No tickets with a rating of 3 or below and status 'Resolved' found.</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+
+
+      </div>
+    </div>
+
+
+    <div id="raiseticket" class="section-content" style="display: none">
+      <div class="heading">
+        <h1>Raise Ticket</h1>
+      </div>
+      <!-- Feedback content goes here -->
+    </div>
+  </div>
+  </div>
+</body>
+
+<script>
+  $(document).ready(function () {
+    $(".sta").change(function () {
+      const ticketId = $(this).attr("id").split("-")[1];
+      const newStatus = $(this).val();
+
+      $.ajax({
+        url: '/update_ticket_status/', // URL for your Django view
+        type: "POST",
+        data: {
+          ticket_id: ticketId,
+          status: newStatus,
+          csrfmiddlewaretoken: "{{ csrf_token }}", // Include CSRF token
+        },
+        success: function (response) {
+
+          window.location.reload()// Show a success message
+        },
+        error: function (xhr, status, error) {
+          alert("Error updating status: " + error); // Show an error message
+        },
+      });
+    });
+  });
+</script>
+
+</html>

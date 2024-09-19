@@ -1,0 +1,195 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inria Sans", sans-serif;
+}
+
+body {
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+header.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:  #333;
+    color: #fff;
+    padding: 15px 30px;
+}
+
+header .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+header .nav-buttons .btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+header .nav-buttons .btn:hover {
+    opacity: 0.9;
+}
+
+main.container {
+    padding: 40px;
+}
+
+/* Section Spacing */
+.card + .card {
+    margin-top: 100px; /* Adds space between cards */
+}
+
+/* Card Style */
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 10%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Title */
+.card h2 {
+    color: #2c3e50;
+    margin-bottom: 50px;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+/* Grid Layout for Cards */
+.card-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust number of columns */
+    gap: 30px;
+}
+
+.card-item {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease;
+}
+
+.card-item:hover {
+    transform: scale(1.05);
+}
+
+.card-item h3 {
+    font-size: 1.2em;
+    color: #2980b9;
+    margin-bottom: 10px;
+}
+
+/* Form Styles */
+.assign-card{
+    width :50%;
+    margin-left: 25%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+.assign-card .form-group {
+    margin-bottom: 25px;
+}
+
+.assign-card label {
+    font-size: 1.1em;
+    color: #2c3e50;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+}
+.assign-card label i{
+    margin-right: 10px;
+}
+
+.assign-card .form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    background-color: #2980b9;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-left: 35%;
+}
+
+.btn-primary:hover {
+    background-color: #1e6a9a;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .card-content {
+        grid-template-columns: 1fr;
+    }
+}
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: auto;
+    left: 0;
+    width: 200px;
+    height: 90%;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.2em;
+    padding: 20px 20px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.sidebar nav ul li a i {
+    margin-right: 15px;
+}
+
+/* Adjust main container for sidebar */
+main.container {
+    margin-left: 220px; /* Space for the sidebar */
+    padding: 40px;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    main.container {
+        margin-left: 0;
+    }
+}
