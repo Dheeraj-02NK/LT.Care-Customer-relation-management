@@ -71,11 +71,13 @@
             <div class="card-content">
                 <!-- Tickets Cards Here -->
             {% for user in ticket1 %}     
+             {% if user.status == "Ticket Raised" %}
                 <div class="card-item">
                     <p><strong>Ticket ID:</strong> {{user.t_id}}</p>
                     <p><strong>Description:</strong> {{user.issue}} </p>
-                    <p><strong>Status:</strong> Open</p>
+                    <p><strong>Status:</strong> {{user.status}}</p>
                 </div>
+                {% endif %}
             {% endfor %}
         </section>
 
@@ -100,8 +102,10 @@
                     <label for="ticket1"><i class="fas fa-ticket-alt"></i> Ticket:</label>
                     <select id="ticket1" name="ticket1" class="form-control">
                         <option value="" readonly style="cursor: not-allowed;">Select Ticket</option>
-                        {% for user in ticket1 %}  
+                        {% for user in ticket1 %}
+                        {% if user.status == "Ticket Raised" %}  
                         <option value="{{user.issue}}">{{user.address}} , {{user.issue}}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>

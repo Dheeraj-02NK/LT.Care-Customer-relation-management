@@ -53,8 +53,8 @@ class Viewtkassign(TemplateView):
         current_user_name = self.request.session.get("user_data")
         
         # Filter userdata based on the current tech lead
-        userdata = Lead.objects.filter(lead_name=current_user_name)  # Assuming 'lead_name' refers to the tech lead's name
-        
+        if ticket1.status == "Ticket Raised" or ticket1.status == "Technician assigned":
+            userdata = Lead.objects.filter(lead_name=current_user_name)  # Assuming 'lead_name' refers to the tech lead's name
         customers = AuthUser.objects.all()
         ticket1 = Ticket.objects.all()
         
