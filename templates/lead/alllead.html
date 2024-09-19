@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Management System</title>
+    <link rel="stylesheet" href="{% static 'css/leadtable.css' %}"> <!-- Updated CSS file name -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">LT.Care</div>
+        <div class="nav-buttons">
+            <button class="btn"><i class="fas fa-bell"></i></button>
+            <button class="btn"><i class="fas fa-cog"></i></button>
+            <button class="btn">Logout</button>
+        </div>
+    </header>
+    <main class="content">
+        <h1>Assigned Tickets Table</h1>
+        <div class="table-container">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Technician Name</th>
+                        <th>Issue</th>
+                        <th>Ticket ID</th>
+                        <th>Date</th>
+                        <th>Lead name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in userdata %}
+                    <tr id="row-{{ user.id }}">
+                        <td class="fullname">{{ user.tec_name }}</td>
+                        <td class="email">{{ user.tk_name }}</td>
+                        <td class="email">{{ user.id }}</td>
+                        <td class="password">{{ user.lead_date }}</td>
+                        <td class="phone">{{ user.lead_name }}</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
