@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
         rel="stylesheet">
@@ -350,7 +353,12 @@
                 <button id="submitUserBtn" onclick="createnewusers()">Submit</button>
             </div>
 
-
+            <div id="homesection" class="section active">
+                <section >
+                    <h2>Ticket Analysis by Location</h2>
+                    <canvas id="ticketChart" width="250" height="100"></canvas>
+                </section>
+            </div>
 
             <div id="userSection" class="section active">
 
@@ -664,6 +672,54 @@
             // Show the 'userSection' initially
             showSection('userSection');
         });
+
+        // Data for the chart (sample data, you can replace it with real data)
+        const labels = ['J P Nagar', 'Jayanagar', 'Vijayanagar', 'Chichkpet', 'T Block','Basavanagudi','Dollars Colony'];
+        const ticketData = {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Tickets Raised',
+                data: [12, 19, 3, 5, 8,4,8], // Sample numbers, replace with actual ticket counts
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(25, 192, 192, 0.7)',
+                    'rgba(12, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(25, 192, 192, 1)',
+                    'rgba(12, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Configuration of the chart
+        const config = {
+            type: 'bar', // You can change it to 'line', 'pie', etc.
+            data: ticketData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        };
     </script>
 </body>
 

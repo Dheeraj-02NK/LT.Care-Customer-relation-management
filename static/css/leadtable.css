@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Inria Sans", sans-serif;
 }
 
 body {
@@ -149,7 +149,10 @@ td {
         font-size: 0.9em;
     }
 }
-/* Hide edit form by default */
-.edit-form {
-    display: none;
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
